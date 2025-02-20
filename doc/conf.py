@@ -233,6 +233,7 @@ def linkcode_resolve(domain: str, info: dict[str, str]) -> str | None:
         pyobject = module
         for elt in info["fullname"].split("."):
             pyobject = getattr(pyobject, elt)
+        pyobject = inspect.unwrap(pyobject)
         fname = inspect.getsourcefile(pyobject).replace("\\", "/")
         if not Path(fname).exists():
             return None
@@ -258,7 +259,7 @@ def linkcode_resolve(domain: str, info: dict[str, str]) -> str | None:
     else:
         maint_version = ".".join(release.rsplit(".")[:2])
         branch = f"maint/{maint_version}"
-    return f"{gh_url}/blob/{branch}/{package}/{fname}#{lines}"
+    return f"{gh_url}/blob/{branch}/src/{package}/{fname}#{lines}"
 
 
 # -- sphinx-gallery --------------------------------------------------------------------
