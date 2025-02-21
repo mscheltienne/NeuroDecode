@@ -1,0 +1,11 @@
+﻿mne\_lsl.lsl.StreamInfo
+=======================
+
+.. currentmodule:: mne_lsl.lsl
+
+.. autoclass:: StreamInfo
+   :members:
+   :inherited-members:
+
+.. minigallery:: mne_lsl.lsl.StreamInfo
+    :add-heading:

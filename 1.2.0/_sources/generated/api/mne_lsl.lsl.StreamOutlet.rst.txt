@@ -1,0 +1,11 @@
+﻿mne\_lsl.lsl.StreamOutlet
+=========================
+
+.. currentmodule:: mne_lsl.lsl
+
+.. autoclass:: StreamOutlet
+   :members:
+   :inherited-members:
+
+.. minigallery:: mne_lsl.lsl.StreamOutlet
+    :add-heading:

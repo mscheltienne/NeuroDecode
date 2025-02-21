@@ -1,0 +1,36 @@
+.. NOTE: we use cross-references to highlight new functions and classes.
+   Please follow the examples below, so the changelog page will have a link to
+   the function/class documentation.
+
+.. NOTE: there are 3 separate sections for changes, based on type:
+   - "Enhancements" for new features
+   - "Bugs" for bug fixes
+   - "API changes" for backward-incompatible changes
+
+.. NOTE: You can use the :pr:`xx` and :issue:`xx` role to x-ref to a GitHub PR
+   or issue from this project.
+
+:hide-toc:
+
+.. include:: ./authors.inc
+
+.. _latest:
+
+Version 1.5
+===========
+
+- Add ``exclude='bads'`` argument to :meth:`~mne_lsl.stream.StreamLSL.get_data` to control exclusion from ``picks`` (:pr:`258` by `Mathieu Scheltienne`_)
+- Add :class:`~mne_lsl.stream.EpochsStream` to epoch a Stream object object on the fly (:pr:`258` by `Mathieu Scheltienne`_)
+- Add tutorial about :class:`~mne_lsl.stream.EpochsStream` (:pr:`302` by `Mathieu Scheltienne`_)
+- Add tutorial about :class:`~mne.Annotations` replayed on a :class:`~mne_lsl.player.PlayerLSL` (:pr:`305` by `Mathieu Scheltienne`_)
+- Expose the abstract :class:`~mne_lsl.stream.BaseStream` object to create custom stream objects relying on different communication protocols (:pr:`302` by `Mathieu Scheltienne`_)
+- Add argument ``source_id`` to :class:`~mne_lsl.player.PlayerLSL` to specify the source_id of the stream (:pr:`305` by `Mathieu Scheltienne`_)
+- Add documentation about the processing applied to a :class:`~mne_lsl.stream.StreamLSL` and :class:`~mne_lsl.stream.EpochsStream` object (:pr:`309` by `Mathieu Scheltienne`_)
+- Add example of real-time classifier using :class:`~mne_lsl.stream.EpochsStream` (:pr:`312` by `Mathieu Scheltienne`_)
+
+Infrastructure
+--------------
+
+- Improve unit tests by setting a marker ``slow`` on tests which take more than 5 seconds to complete (:pr:`258` by `Mathieu Scheltienne`_)
+- Make unit tests using :func:`~mne_lsl.lsl.resolve_streams` robust to the presence of other LSL streams on the network (:pr:`305` by `Mathieu Scheltienne`_)
+- Improve documentation build and unit test by adding a github action to retry a step when needed (:pr:`258` and :pr:`306` by `Eric Larson`_ and `Mathieu Scheltienne`_)

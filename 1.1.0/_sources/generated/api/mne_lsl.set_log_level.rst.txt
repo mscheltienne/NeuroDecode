@@ -1,0 +1,9 @@
+﻿mne\_lsl.set\_log\_level
+========================
+
+.. currentmodule:: mne_lsl
+
+.. autofunction:: set_log_level
+
+.. minigallery:: mne_lsl.set_log_level
+    :add-heading:

@@ -1,0 +1,11 @@
+﻿mne\_lsl.stream.BaseStream
+==========================
+
+.. currentmodule:: mne_lsl.stream
+
+.. autoclass:: BaseStream
+   :members:
+   :inherited-members:
+
+.. minigallery:: mne_lsl.stream.BaseStream
+    :add-heading:

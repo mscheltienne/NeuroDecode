@@ -1,0 +1,27 @@
+.. NOTE: we use cross-references to highlight new functions and classes.
+   Please follow the examples below, so the changelog page will have a link to
+   the function/class documentation.
+
+.. NOTE: there are 3 separate sections for changes, based on type:
+   - "Enhancements" for new features
+   - "Bugs" for bug fixes
+   - "API changes" for backward-incompatible changes
+
+.. NOTE: You can use the :pr:`xx` and :issue:`xx` role to x-ref to a GitHub PR
+   or issue from this project.
+
+:hide-toc:
+
+.. include:: ./authors.inc
+
+Version 1.7.0
+=============
+
+- Package ``liblsl`` with ``mne-lsl`` in wheels (:pr:`351` by `Eric Larson`_ and `Mathieu Scheltienne`_)
+
+.. _latest:
+
+Version 1.7.1
+=============
+
+- Fix detection of ``liblsl`` within the environment variable ``PYLSL_LIB`` or ``MNE_LSL_LIB`` (:pr:`363` by `Mathieu Scheltienne`_)

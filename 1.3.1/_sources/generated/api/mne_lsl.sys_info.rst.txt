@@ -1,0 +1,9 @@
+﻿mne\_lsl.sys\_info
+==================
+
+.. currentmodule:: mne_lsl
+
+.. autofunction:: sys_info
+
+.. minigallery:: mne_lsl.sys_info
+    :add-heading:

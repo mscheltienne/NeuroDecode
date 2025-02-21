@@ -1,0 +1,11 @@
+﻿mne\_lsl.stream.EpochsStream
+============================
+
+.. currentmodule:: mne_lsl.stream
+
+.. autoclass:: EpochsStream
+   :members:
+   :inherited-members:
+
+.. minigallery:: mne_lsl.stream.EpochsStream
+    :add-heading:

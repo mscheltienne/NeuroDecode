@@ -1,0 +1,1666 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Low-level LSL API" href="10_low_level_API.html" /><link rel="prev" title="Tutorials" href="index.html" />
+
+    <link rel="shortcut icon" href="../../_static/logo-no-mne.svg"/><!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Introduction to real-time LSL streams - MNE-LSL</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css?v=eb651fe2" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">MNE-LSL</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo-mne-hex.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../resources/install.html">Install</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API References</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/most-used%20classes.html">Most-used classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/lsl%20%28low-level%29.html">LSL (low-level)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/legacy.html">Legacy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/command_line.html">Command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/implementations.html">Implementation details</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Introduction to real-time LSL streams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_low_level_API.html">Low-level LSL API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20_player_annotations.html">Player with annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30_stream_manual.html">Automatic vs Manual acquisition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40_epochs.html">Epoching a Stream in real-time</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/00_player_separate_process.html">Replaying a file in a separate process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/10_peak_detection.html">Real-time peak detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/20_bandpower.html">Bandpower rolling window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/30_real_time_evoked_responses.html">Real-time evoked responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/40_decode.html">Decoding real-time data</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../development/contributing.html">Contribution guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../development/changes/index.html">Changelog</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Changelog</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.8.html">Version 1.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.7.html">Version 1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.7.html#version-1-7-0">Version 1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.6.html">Version 1.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.6.html#version-1-6-0">Version 1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.5.html">Version 1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.4.html">Version 1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.3.html">Version 1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.3.html#version-1-3-0">Version 1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.2.html">Version 1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.1.html">Version 1.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.1.html#version-1-1-0">Version 1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development/changes/1.0.html">Version 1.0.0</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/generated/tutorials/00_introduction.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-generated-tutorials-00-introduction-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="introduction-to-real-time-lsl-streams">
+<span id="sphx-glr-generated-tutorials-00-introduction-py"></span><h1>Introduction to real-time LSL streams<a class="headerlink" href="#introduction-to-real-time-lsl-streams" title="Link to this heading">🔗</a></h1>
+<p>LSL is an open-source networked middleware ecosystem to stream, receive, synchronize,
+and record neural, physiological, and behavioral data streams acquired from diverse
+sensor hardware. It reduces complexity and barriers to entry for researchers, sensor
+manufacturers, and users through a simple, interoperable, standardized API to connect
+data consumers to data producers while abstracting obstacles such as platform
+differences, stream discovery, synchronization and fault-tolerance.
+Source: <a class="reference external" href="https://labstreaminglayer.org">LabStreamingLayer website</a>.</p>
+<p>In real-time applications, a server emits a data stream, and one or more clients connect
+to the server to receive this data. In LSL terminology, the server is referred to as a
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a>, while the client is referred to as a
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInlet</span></code></a>. The power of LSL resides in its ability to facilitate
+interoperability and synchronization among streams. Clients have the capability to
+connect to multiple servers, which may be running on the same or different computers
+(and therefore different platforms/operating systems), and synchronize the streams
+originating from these various servers.</p>
+<p>MNE-LSL enhances the LSL API by offering a high-level interface akin to the
+<a class="reference external" href="https://mne.tools/stable/index.html">MNE-Python</a> API. While this tutorial concentrates on the high-level API,
+detailed coverage of the low-level LSL API is provided in
+<a class="reference internal" href="10_low_level_API.html#tut-low-level-api"><span class="std std-ref">this separate tutorial</span></a>.</p>
+<section id="concepts">
+<h2>Concepts<a class="headerlink" href="#concepts" title="Link to this heading">🔗</a></h2>
+<p>In essence, a real-time LSL stream can be envisioned as a perpetual recording, akin to
+a <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.Raw</span></code></a> instance, characterized by an indeterminate length and providing
+access solely to current and preceding samples. In memory, it can be depicted as a ring
+buffer, also known as a circular buffer, a data structure employing a single, unchanging
+buffer size, seemingly interconnected end-to-end.</p>
+<img alt="../../_images/circular-buffer-light.png" class="only-light align-center" src="../../_images/circular-buffer-light.png" />
+<img alt="../../_images/circular-buffer-dark.png" class="only-dark align-center" src="../../_images/circular-buffer-dark.png" />
+<p>Within a ring buffer, there are two pivotal pointers:</p>
+<ul class="simple">
+<li><p>The “head” pointer, also referred to as “start” or “read,” indicates the subsequent
+data block available for reading.</p></li>
+<li><p>The “tail” pointer, known as “end” or “write,” designates the forthcoming data block
+to be replaced with fresh data.</p></li>
+</ul>
+<p>In a ring buffer configuration, when the “tail” pointer aligns with the “head” pointer,
+data is overwritten before it can be accessed. Conversely, the “head” pointer cannot
+surpass the “tail” pointer; it will always lag at least one sample behind. In all cases,
+it falls upon the user to routinely inspect and fetch samples from the ring buffer,
+thereby advancing the “head” pointer.</p>
+<p>Within MNE-LSL, the <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a> object manages a ring buffer
+internally, which is continuously refreshed with new samples. Notably, the two pointers
+are concealed, with the head pointer being automatically adjusted to the latest received
+sample. Given the preference for accessing the most recent information in neural,
+physiological, and behavioral real-time applications, this operational approach
+streamlines interaction with LSL streams and mitigates the risk of users accessing
+outdated data.</p>
+</section>
+<section id="mocking-an-lsl-stream">
+<h2>Mocking an LSL stream<a class="headerlink" href="#mocking-an-lsl-stream" title="Link to this heading">🔗</a></h2>
+<p>To build real-time applications or showcase their functionalities, such as in this
+tutorial, it’s essential to generate simulated LSL streams. This involves creating a
+:class:~mne_lsl.lsl.StreamOutlet and regularly sending data through it.</p>
+<p>Within MNE-LSL, the <a class="reference internal" href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerLSL</span></code></a> generates a simulated LSL stream
+utilizing data from a <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.Raw</span></code></a> file or object. This stream inherits its
+description and channel specifications from the associated <a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Info</span></code></a>. This
+information encompasses channel properties, channel locations, filters, digitization,
+and <a class="reference external" href="https://mne.tools/dev/documentation/implementation.html#signal-space-projection-ssp">SSP projectors</a>. The :class:~mne_lsl.player.PlayerLSL subsequently publishes data
+at regular intervals and seamlessly loops back to the starting point once the end of the
+file is reached.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">mne</span> <span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.set_log_level.html#mne.set_log_level" title="mne.set_log_level" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">set_log_level</span></a>
+
+<span class="kn">from</span> <span class="nn">mne_lsl.datasets</span> <span class="kn">import</span> <span class="n">sample</span>
+<span class="kn">from</span> <span class="nn">mne_lsl.player</span> <span class="kn">import</span> <span class="n">PlayerLSL</span> <span class="k">as</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-class"><span class="n">Player</span></a>
+<span class="kn">from</span> <span class="nn">mne_lsl.stream</span> <span class="kn">import</span> <span class="n">StreamLSL</span> <span class="k">as</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class"><span class="n">Stream</span></a>
+
+<a href="https://mne.tools/stable/generated/mne.set_log_level.html#mne.set_log_level" title="mne.set_log_level" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">set_log_level</span></a><span class="p">(</span><span class="s2">&quot;WARNING&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The argument <code class="docutils literal notranslate"><span class="pre">source_id</span></code> can be omitted most of the time. But for reliability in
+our documentation build on CIs, we assign a random unique identifier to each
+mock stream created.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/uuid.html#uuid.uuid4" title="uuid.uuid4" class="sphx-glr-backref-module-uuid sphx-glr-backref-type-py-function"><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span></a><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+<a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;sample-ant-raw.fif&quot;</span>
+<a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">player</span></a> <span class="o">=</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-class"><span class="n">Player</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fname</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chunk_size</span></a><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_id</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_id</span></a><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL.info" title="mne_lsl.player.PlayerLSL.info" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-property"><span class="n">player</span><span class="o">.</span><span class="n">info</span></a>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
+
+  const elements = document.querySelectorAll(`.${className}`)
+
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
+
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
+
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
+
+
+
+<table class="repr table table-hover table-striped table-sm table-responsive small">
+
+
+
+
+
+
+
+
+<tr class="repr-section-header general-9d3ca2c2-4701-4a24-9517-f73e19d30b74"  title="Hide section"
+    onclick="toggleVisibility('general-9d3ca2c2-4701-4a24-9517-f73e19d30b74')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-9d3ca2c2-4701-4a24-9517-f73e19d30b74 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>Info</td>
+</tr>
+<tr class="repr-element general-9d3ca2c2-4701-4a24-9517-f73e19d30b74 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>Unknown</td>
+
+</tr>
+<tr class="repr-element general-9d3ca2c2-4701-4a24-9517-f73e19d30b74 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+    <td>Unknown</td>
+
+</tr>
+<tr class="repr-element general-9d3ca2c2-4701-4a24-9517-f73e19d30b74 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>mne_anonymize</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-a77fa953-c7b9-4f09-a718-7ac6b0c5c8e1"
+    title="Hide section"  onclick="toggleVisibility('acquisition-a77fa953-c7b9-4f09-a718-7ac6b0c5c8e1')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-a77fa953-c7b9-4f09-a718-7ac6b0c5c8e1 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>1024.00 Hz</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049"  title="Hide section"
+    onclick="toggleVisibility('channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>EEG</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good EEG:\n\nFp1, Fpz, Fp2, F7, F3, Fz, F4, F8, FC5, FC1, FC2, FC6, M1, T7, C3, Cz, C4, T8, M2, CP5, CP1, CP2, CP6, P7, P3, Pz, P4, P8, POz, O1, O2, AF7, AF3, AF4, AF8, F5, F1, F2, F6, FC3, FCz, FC4, C5, C1, C2, C6, CP3, CP4, P5, P1, P2, P6, PO5, PO3, PO4, PO6, FT7, FT8, TP7, TP8, PO7, PO8, Oz')" title="(Click to open in popup)&#13;&#13;Fp1, Fpz, Fp2, F7, F3, Fz, F4, F8, FC5, FC1, FC2, FC6, M1, T7, C3, Cz, C4, T8, M2, CP5, CP1, CP2, CP6, P7, P3, Pz, P4, P8, POz, O1, O2, AF7, AF3, AF4, AF8, F5, F1, F2, F6, FC3, FCz, FC4, C5, C1, C2, C6, CP3, CP4, P5, P1, P2, P6, PO5, PO3, PO4, PO6, FT7, FT8, TP7, TP8, PO7, PO8, Oz">
+            63
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>EOG</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good EOG:\n\nvEOG, hEOG')" title="(Click to open in popup)&#13;&#13;vEOG, hEOG">
+            2
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>ECG</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good ECG:\n\nECG')" title="(Click to open in popup)&#13;&#13;ECG">
+            1
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Stimulus</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good Stimulus:\n\nTRIGGER')" title="(Click to open in popup)&#13;&#13;TRIGGER">
+            1
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Galvanic skin response</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good Galvanic skin response:\n\nEDA')" title="(Click to open in popup)&#13;&#13;EDA">
+            1
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-88e4b4ab-d7e7-4593-97e3-68ca44cac049 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>Not available</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-acd67424-411e-4e8e-b2af-0d6992670fbf"  title="Hide section"
+    onclick="toggleVisibility('filters-acd67424-411e-4e8e-b2af-0d6992670fbf')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-acd67424-411e-4e8e-b2af-0d6992670fbf ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-acd67424-411e-4e8e-b2af-0d6992670fbf ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>512.00 Hz</td>
+</tr>
+
+
+</table>
+</div>
+<br />
+<br /><p>Once the <a class="reference internal" href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL.start" title="mne_lsl.player.PlayerLSL.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start()</span></code></a> is called, data is published at
+regular intervals. The interval duration depends on the sampling rate and on the
+number of samples pushed at once, defined by the <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> argument of the
+<a class="reference internal" href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerLSL</span></code></a> object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default setting for chunk_size is <code class="docutils literal notranslate"><span class="pre">10</span></code>. In real-time applications, there may
+be advantages to employing smaller chunk sizes for data publication, but to build
+the documentation website or to run test successfully on CIs, a larger chunk size
+is used to reduce the number of push operations and improve stability.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a> <span class="o">=</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL.info" title="mne_lsl.player.PlayerLSL.info" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-property"><span class="n">player</span><span class="o">.</span><span class="n">info</span></a><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">]</span>
+<a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chunk_size</span></a> <span class="o">=</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL.chunk_size" title="mne_lsl.player.PlayerLSL.chunk_size" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-property"><span class="n">player</span><span class="o">.</span><span class="n">chunk_size</span></a>
+<a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">interval</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chunk_size</span></a> <span class="o">/</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a>  <span class="c1"># in seconds</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Interval between 2 push operations: </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">interval</span></a><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Interval between 2 push operations: 0.1953125 seconds.
+</pre></div>
+</div>
+<p>A <a class="reference internal" href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerLSL</span></code></a> can also stream annotations attached to the
+<a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.Raw</span></code></a> object. Annotations are streamed on a second irregularly sampled
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a>. See
+<a class="reference internal" href="20_player_annotations.html#tut-player-annotations"><span class="std std-ref">this separate tutorial</span></a> for additional information.</p>
+</section>
+<section id="subscribing-to-an-lsl-stream">
+<h2>Subscribing to an LSL stream<a class="headerlink" href="#subscribing-to-an-lsl-stream" title="Link to this heading">🔗</a></h2>
+<p>With the mock LSL stream operational in the background, we can proceed to subscribe to
+this stream and access both its description and the data stored within its buffer. The
+<a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a> object operates both the underlying
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInlet</span></code></a> and the ring buffer, which size must be
+explicitly set upon creation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a> can connect to a single LSL stream. Thus, if
+multiple LSL stream are present on the network, it’s crucial to uniquely identify
+a specific LSL stream using the <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">stype</span></code>, and <code class="docutils literal notranslate"><span class="pre">source_id</span></code> arguments
+of the <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a> object.</p>
+</div>
+<p>The stream description is automatically parsed into an <a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Info</span></code></a> upon
+connection with the method <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.connect" title="mne_lsl.stream.StreamLSL.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mne_lsl.stream.StreamLSL.connect()</span></code></a>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stream</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class"><span class="n">Stream</span></a><span class="p">(</span><span class="n">bufsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_id</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_id</span></a><span class="p">)</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.info" title="mne_lsl.stream.StreamLSL.info" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">info</span></a>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
+
+  const elements = document.querySelectorAll(`.${className}`)
+
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
+
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
+
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
+
+
+
+<table class="repr table table-hover table-striped table-sm table-responsive small">
+
+
+
+
+
+
+
+
+<tr class="repr-section-header general-61b2b8a1-9a51-47b4-9c96-17840368c487"  title="Hide section"
+    onclick="toggleVisibility('general-61b2b8a1-9a51-47b4-9c96-17840368c487')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-61b2b8a1-9a51-47b4-9c96-17840368c487 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>Info</td>
+</tr>
+<tr class="repr-element general-61b2b8a1-9a51-47b4-9c96-17840368c487 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>Unknown</td>
+
+</tr>
+<tr class="repr-element general-61b2b8a1-9a51-47b4-9c96-17840368c487 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+    <td>Unknown</td>
+
+</tr>
+<tr class="repr-element general-61b2b8a1-9a51-47b4-9c96-17840368c487 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>Unknown</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-8af21649-31b0-4ae6-b50e-d53a11b02ac3"
+    title="Hide section"  onclick="toggleVisibility('acquisition-8af21649-31b0-4ae6-b50e-d53a11b02ac3')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-8af21649-31b0-4ae6-b50e-d53a11b02ac3 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>1024.00 Hz</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94"  title="Hide section"
+    onclick="toggleVisibility('channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>EEG</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good EEG:\n\nFp1, Fpz, Fp2, F7, F3, Fz, F4, F8, FC5, FC1, FC2, FC6, M1, T7, C3, Cz, C4, T8, M2, CP5, CP1, CP2, CP6, P7, P3, Pz, P4, P8, POz, O1, O2, AF7, AF3, AF4, AF8, F5, F1, F2, F6, FC3, FCz, FC4, C5, C1, C2, C6, CP3, CP4, P5, P1, P2, P6, PO5, PO3, PO4, PO6, FT7, FT8, TP7, TP8, PO7, PO8, Oz')" title="(Click to open in popup)&#13;&#13;Fp1, Fpz, Fp2, F7, F3, Fz, F4, F8, FC5, FC1, FC2, FC6, M1, T7, C3, Cz, C4, T8, M2, CP5, CP1, CP2, CP6, P7, P3, Pz, P4, P8, POz, O1, O2, AF7, AF3, AF4, AF8, F5, F1, F2, F6, FC3, FCz, FC4, C5, C1, C2, C6, CP3, CP4, P5, P1, P2, P6, PO5, PO3, PO4, PO6, FT7, FT8, TP7, TP8, PO7, PO8, Oz">
+            63
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>EOG</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good EOG:\n\nvEOG, hEOG')" title="(Click to open in popup)&#13;&#13;vEOG, hEOG">
+            2
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>ECG</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good ECG:\n\nECG')" title="(Click to open in popup)&#13;&#13;ECG">
+            1
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Stimulus</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good Stimulus:\n\nTRIGGER')" title="(Click to open in popup)&#13;&#13;TRIGGER">
+            1
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Galvanic skin response</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good Galvanic skin response:\n\nEDA')" title="(Click to open in popup)&#13;&#13;EDA">
+            1
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-4a0bba8b-aed6-47bb-b17e-c6dcd89e1a94 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>Not available</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-62970cfe-7e06-4265-afbe-94eb18ba7c62"  title="Hide section"
+    onclick="toggleVisibility('filters-62970cfe-7e06-4265-afbe-94eb18ba7c62')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-62970cfe-7e06-4265-afbe-94eb18ba7c62 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-62970cfe-7e06-4265-afbe-94eb18ba7c62 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>512.00 Hz</td>
+</tr>
+
+
+</table>
+</div>
+<br />
+<br /><p>Interaction with a <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a> is similar to the interaction
+with a <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.Raw</span></code></a>. In this example, the stream is mocked from a 64 channels
+EEG recording with an ANT Neuro amplifier. It includes 63 EEG, 2 EOG, 1 ECG, 1 EDA, 1
+STIM channel, and uses CPz as reference.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_channel_types" title="mne_lsl.stream.StreamLSL.get_channel_types" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_channel_types</span></a><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Channel types included: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch_types</span></a><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Channel types included: eeg, eog, gsr, ecg, stim
+</pre></div>
+</div>
+<p>Operations such as channel selection, re-referencing, and filtering are performed
+directly on the ring buffer. For instance, we can select the EEG channels, add the
+missing reference channel and re-reference using a common average referencing scheme
+which will reduce the ring buffer to 64 channels.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By design, once a re-referencing operation is performed or if at least one filter
+is applied, it is not possible anymore to select a subset of channels with the
+methods <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pick()</span></code></a> or
+<a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.drop_channels" title="mne_lsl.stream.StreamLSL.drop_channels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">drop_channels()</span></code></a>. Note that the re-referencing is
+not reversible while filters can be removed with the method
+<a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.del_filter" title="mne_lsl.stream.StreamLSL.del_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">del_filter()</span></code></a>.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">pick</span></a><span class="p">(</span><span class="s2">&quot;eeg&quot;</span><span class="p">)</span>  <span class="c1"># channel selection</span>
+<span class="k">assert</span> <span class="s2">&quot;CPz&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.ch_names" title="mne_lsl.stream.StreamLSL.ch_names" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">ch_names</span></a>  <span class="c1"># reference absent from the data stream</span>
+<a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.add_reference_channels" title="mne_lsl.stream.StreamLSL.add_reference_channels" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">add_reference_channels</span></a><span class="p">(</span><span class="s2">&quot;CPz&quot;</span><span class="p">)</span>
+<a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.set_eeg_reference" title="mne_lsl.stream.StreamLSL.set_eeg_reference" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">set_eeg_reference</span></a><span class="p">(</span><span class="s2">&quot;average&quot;</span><span class="p">)</span>
+<a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.info" title="mne_lsl.stream.StreamLSL.info" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">info</span></a>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<script type="text/javascript">
+    const toggleVisibility = (className) => {
+
+  const elements = document.querySelectorAll(`.${className}`)
+
+  elements.forEach(element => {
+    if (element.classList.contains('repr-section-header')) {
+      // Don't collapse the section header row.
+       return
+    }
+    if (element.classList.contains('repr-element-collapsed')) {
+      // Force a reflow to ensure the display change takes effect before removing the class
+      element.classList.remove('repr-element-collapsed')
+      element.offsetHeight // This forces the browser to recalculate layout
+      element.classList.remove('repr-element-faded')
+    } else {
+      // Start transition to hide the element
+      element.classList.add('repr-element-faded')
+      element.addEventListener('transitionend', handler = (e) => {
+        if (e.propertyName === 'opacity' && getComputedStyle(element).opacity === '0.2') {
+          element.classList.add('repr-element-collapsed')
+          element.removeEventListener('transitionend', handler)
+        }
+      });
+    }
+  });
+
+  // Take care of button (adjust caret)
+  const button = document.querySelectorAll(`.repr-section-header.${className} > th.repr-section-toggle-col > button`)[0]
+  button.classList.toggle('collapsed')
+
+  // Take care of the tooltip of the section header row
+  const sectionHeaderRow = document.querySelectorAll(`tr.repr-section-header.${className}`)[0]
+  sectionHeaderRow.classList.toggle('collapsed')
+  sectionHeaderRow.title = sectionHeaderRow.title === 'Hide section' ? 'Show section' : 'Hide section'
+}
+</script>
+
+<style type="text/css">
+    table.repr.table.table-hover.table-striped.table-sm.table-responsive.small {
+  /* Don't make rows wider than they need to be. */
+  display: inline;
+}
+
+table > tbody > tr.repr-element > td {
+  /* Apply a tighter layout to the table cells. */
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  padding-right: 1rem;
+}
+
+table > tbody > tr > td.repr-section-toggle-col {
+  /* Remove background and border of the first cell in every row
+     (this row is only used for the collapse / uncollapse caret)
+
+     TODO: Need to find a good solution for VS Code that works in both
+           light and dark mode. */
+  border-color: transparent;
+  --bs-table-accent-bg: transparent;
+}
+
+tr.repr-section-header {
+  /* Remove stripes from section header rows */
+  background-color: transparent;
+  border-color: transparent;
+  --bs-table-striped-bg: transparent;
+  cursor: pointer;
+}
+
+tr.repr-section-header > th {
+  text-align: left !important;
+  vertical-align: middle;
+}
+
+.repr-element, tr.repr-element > td {
+  opacity: 1;
+  text-align: left !important;
+}
+
+.repr-element-faded {
+  transition: 0.3s ease;
+  opacity: 0.2;
+}
+
+.repr-element-collapsed {
+  display: none;
+}
+
+/* Collapse / uncollapse button and the caret it contains. */
+.repr-section-toggle-col button {
+  cursor: pointer;
+  width: 1rem;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+span.collapse-uncollapse-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain;
+}
+
+/* The collapse / uncollapse carets were copied from the free Font Awesome collection and adjusted. */
+
+/* Default to black carets for light mode */
+.repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+}
+
+.repr-section-toggle-col
+  > button:not(.collapsed)
+  > span.collapse-uncollapse-caret {
+  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="black" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+}
+
+/* Use white carets for dark mode */
+@media (prefers-color-scheme: dark) {
+  .repr-section-toggle-col > button.collapsed > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+  }
+
+  .repr-section-toggle-col
+    > button:not(.collapsed)
+    > span.collapse-uncollapse-caret {
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="white" d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>');
+  }
+}
+
+.channel-names-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: pointer;
+  color: #0d6efd;
+}
+
+.channel-names-btn:hover {
+  color: #0a58ca;
+}
+</style>
+
+
+
+<table class="repr table table-hover table-striped table-sm table-responsive small">
+
+
+
+
+
+
+
+
+<tr class="repr-section-header general-ee478702-71cc-4c0d-8c4b-832323aa91df"  title="Hide section"
+    onclick="toggleVisibility('general-ee478702-71cc-4c0d-8c4b-832323aa91df')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>General</strong>
+    </th>
+</tr>
+
+<tr class="repr-element general-ee478702-71cc-4c0d-8c4b-832323aa91df ">
+    <td class="repr-section-toggle-col"></td>
+    <td>MNE object type</td>
+    <td>Info</td>
+</tr>
+<tr class="repr-element general-ee478702-71cc-4c0d-8c4b-832323aa91df ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Measurement date</td>
+
+    <td>Unknown</td>
+
+</tr>
+<tr class="repr-element general-ee478702-71cc-4c0d-8c4b-832323aa91df ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Participant</td>
+
+    <td>Unknown</td>
+
+</tr>
+<tr class="repr-element general-ee478702-71cc-4c0d-8c4b-832323aa91df ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Experimenter</td>
+
+    <td>Unknown</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header acquisition-bc726ccc-fad0-4a98-96ce-5fb694fcf428"
+    title="Hide section"  onclick="toggleVisibility('acquisition-bc726ccc-fad0-4a98-96ce-5fb694fcf428')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Acquisition</strong>
+    </th>
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-element acquisition-bc726ccc-fad0-4a98-96ce-5fb694fcf428 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Sampling frequency</td>
+    <td>1024.00 Hz</td>
+</tr>
+
+
+
+
+
+
+
+
+
+
+
+<tr class="repr-section-header channels-edd25844-888a-44a9-8a5e-fe946cc327a5"  title="Hide section"
+    onclick="toggleVisibility('channels-edd25844-888a-44a9-8a5e-fe946cc327a5')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Channels</strong>
+    </th>
+</tr>
+
+
+<tr class="repr-element channels-edd25844-888a-44a9-8a5e-fe946cc327a5 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>EEG</td>
+    <td>
+        <button class="channel-names-btn" onclick="alert('Good EEG:\n\nFp1, Fpz, Fp2, F7, F3, Fz, F4, F8, FC5, FC1, FC2, FC6, M1, T7, C3, Cz, C4, T8, M2, CP5, CP1, CP2, CP6, P7, P3, Pz, P4, P8, POz, O1, O2, AF7, AF3, AF4, AF8, F5, F1, F2, F6, FC3, FCz, FC4, C5, C1, C2, C6, CP3, CP4, P5, P1, P2, P6, PO5, PO3, PO4, PO6, FT7, FT8, TP7, TP8, PO7, PO8, Oz, CPz')" title="(Click to open in popup)&#13;&#13;Fp1, Fpz, Fp2, F7, F3, Fz, F4, F8, FC5, FC1, FC2, FC6, M1, T7, C3, Cz, C4, T8, M2, CP5, CP1, CP2, CP6, P7, P3, Pz, P4, P8, POz, O1, O2, AF7, AF3, AF4, AF8, F5, F1, F2, F6, FC3, FCz, FC4, C5, C1, C2, C6, CP3, CP4, P5, P1, P2, P6, PO5, PO3, PO4, PO6, FT7, FT8, TP7, TP8, PO7, PO8, Oz, CPz">
+            64
+        </button>
+
+
+    </td>
+</tr>
+
+
+<tr class="repr-element channels-edd25844-888a-44a9-8a5e-fe946cc327a5 ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Head & sensor digitization</td>
+
+    <td>Not available</td>
+
+</tr>
+
+
+
+
+
+
+
+
+<tr class="repr-section-header filters-18653321-f00c-4284-a9c5-0ad91f21fc0b"  title="Hide section"
+    onclick="toggleVisibility('filters-18653321-f00c-4284-a9c5-0ad91f21fc0b')">
+    <th class="repr-section-toggle-col">
+        <button>
+
+            <span class="collapse-uncollapse-caret"></span>
+        </button>
+    </th>
+    <th colspan="2">
+        <strong>Filters</strong>
+    </th>
+</tr>
+
+<tr class="repr-element filters-18653321-f00c-4284-a9c5-0ad91f21fc0b ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Highpass</td>
+    <td>0.00 Hz</td>
+</tr>
+
+
+<tr class="repr-element filters-18653321-f00c-4284-a9c5-0ad91f21fc0b ">
+    <td class="repr-section-toggle-col"></td>
+    <td>Lowpass</td>
+    <td>512.00 Hz</td>
+</tr>
+
+
+</table>
+</div>
+<br />
+<br /><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As for MNE-Python, methods can be chained, e.g.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">pick</span></a><span class="p">(</span><span class="s2">&quot;eeg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add_reference_channels</span><span class="p">(</span><span class="s2">&quot;CPz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The ring buffer is accessed with the method <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a>
+which returns both the samples and their associated timestamps. In LSL terminology, a
+sample is an array of shape (n_channels,).</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">picks</span></a> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Fz&quot;</span><span class="p">,</span> <span class="s2">&quot;Cz&quot;</span><span class="p">,</span> <span class="s2">&quot;Oz&quot;</span><span class="p">)</span>  <span class="c1"># channel selection</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">f</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>  <span class="c1"># acquire 3 separate window</span>
+    <span class="c1"># figure how many new samples are available, in seconds</span>
+    <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">winsize</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_new_samples</span></a> <span class="o">/</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.info" title="mne_lsl.stream.StreamLSL.info" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">info</span></a><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">]</span>
+    <span class="c1"># retrieve and plot data</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">winsize</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">picks</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">picks</span></a><span class="p">)</span>
+    <span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_channel</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">):</span>
+        <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_channel</span></a><span class="p">)</span>
+    <a href="https://docs.python.org/3/library/time.html#time.sleep" title="time.sleep" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">sleep</span></a><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">picks</span></a><span class="p">):</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;EEG </span><span class="si">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ch</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Timestamp (LSL time)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_00_introduction_001.png" srcset="../../_images/sphx_glr_00_introduction_001.png" alt="EEG Fz, EEG Cz, EEG Oz" class = "sphx-glr-single-img"/><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that the first of the 3 chunks plotted is longer. This is because
+execution of the channel selection and re-referencing operations took a finite
+amount of time to complete while in the background, the
+<a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a> was still acquiring new samples. Note also that
+<a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples"><code class="xref py py-attr docutils literal notranslate"><span class="pre">n_new_samples</span></code></a> is reset to 0 after each call
+to <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a>, but it is not reset if the “tail”
+pointer overtakes the “head” pointer, in other words, it is not reset if the
+number of new samples since the last <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a>
+call exceeds the buffer size.</p>
+</div>
+</section>
+<section id="free-resources">
+<h2>Free resources<a class="headerlink" href="#free-resources" title="Link to this heading">🔗</a></h2>
+<p>When you are done with a <a class="reference internal" href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlayerLSL</span></code></a> or
+<a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a>, don’t forget to free the resources they both use
+to continuously mock an LSL stream or receive new data from an LSL stream.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.disconnect" title="mne_lsl.stream.StreamLSL.disconnect" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">disconnect</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Stream: OFF | MNE-LSL-Player (source: 492dbd9f7faf4f929df3a83ee816853b)&gt;
+</pre></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL.stop" title="mne_lsl.player.PlayerLSL.stop" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-method"><span class="n">player</span><span class="o">.</span><span class="n">stop</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Player: MNE-LSL-Player | OFF | /home/runner/mne_data/MNE-LSL-data/sample/sample-ant-raw.fif&gt;
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 5.145 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  276 MB</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-generated-tutorials-00-introduction-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/b3ce63b2e530ea0781d8985d148f17a1/00_introduction.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">00_introduction.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/ffb6e8feadedacd10cf5136b80421078/00_introduction.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">00_introduction.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/9eeade34b4fd43fbe7b782f735e18d6e/00_introduction.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">00_introduction.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="10_low_level_API.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Low-level LSL API</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Tutorials</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, M. Scheltienne, A. Desvachez, K. Lee
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/mne-tools/mne-lsl" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Introduction to real-time LSL streams</a><ul>
+<li><a class="reference internal" href="#concepts">Concepts</a></li>
+<li><a class="reference internal" href="#mocking-an-lsl-stream">Mocking an LSL stream</a></li>
+<li><a class="reference internal" href="#subscribing-to-an-lsl-stream">Subscribing to an LSL stream</a></li>
+<li><a class="reference internal" href="#free-resources">Free resources</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=b51e6972"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

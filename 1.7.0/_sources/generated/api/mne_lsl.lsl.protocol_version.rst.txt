@@ -1,0 +1,9 @@
+﻿mne\_lsl.lsl.protocol\_version
+==============================
+
+.. currentmodule:: mne_lsl.lsl
+
+.. autofunction:: protocol_version
+
+.. minigallery:: mne_lsl.lsl.protocol_version
+    :add-heading:

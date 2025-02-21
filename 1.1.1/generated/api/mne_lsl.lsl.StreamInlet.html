@@ -1,0 +1,694 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="mne_lsl.lsl.StreamOutlet" href="mne_lsl.lsl.StreamOutlet.html" /><link rel="prev" title="mne_lsl.lsl.StreamInfo" href="mne_lsl.lsl.StreamInfo.html" />
+
+    <link rel="shortcut icon" href="../../_static/logo-no-mne.svg"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>mne_lsl.lsl.StreamInlet - MNE-LSL</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css?v=0bd98ae2" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">MNE-LSL</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo-mne-hex.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/install.html">Install</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API References</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/most-used%20classes.html">Most-used classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/lsl%20%28low-level%29.html">LSL (low-level)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/legacy.html">Legacy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/command_line.html">Command line</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_stream.html">Introduction to the Stream API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/10_player.html">Introduction to the Player API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/20_stream_meas_info.html">Stream information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/30_timestamps.html">Stream timestamps</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../changes/index.html">Changelog</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Changelog</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.1.html">Version 1.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.1.html#version-1-1-0">Version 1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="mne-lsl-lsl-streaminlet">
+<h1>mne_lsl.lsl.StreamInlet<a class="headerlink" href="#mne-lsl-lsl-streaminlet" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mne_lsl.lsl.</span></span><span class="sig-name descname"><span class="pre">StreamInlet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sinfo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_buffered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">360</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recover</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L27-L482"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet" title="Permalink to this definition">#</a></dt>
+<dd><p>An inlet to retrieve data and metadata on the network.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>sinfo</strong><span class="classifier"><a class="reference internal" href="mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamInfo</span></code></a></span></dt><dd><p>Description of the stream to connect to.</p>
+</dd>
+<dt><strong>chunk_size</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">≥</span> <span class="pre">1</span></code> | <code class="docutils literal notranslate"><span class="pre">0</span></code></span></dt><dd><p>The desired chunk granularity in samples. By default, the <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> defined
+by the sender (outlet) is used.</p>
+</dd>
+<dt><strong>max_buffered</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> <code class="docutils literal notranslate"><span class="pre">≥</span> <span class="pre">0</span></code></span></dt><dd><p>The maximum amount of data to buffer in the Outlet. The number of samples
+buffered is <code class="docutils literal notranslate"><span class="pre">max_buffered</span> <span class="pre">*</span> <span class="pre">100</span></code> if the sampling rate is irregular, else it’s
+<code class="docutils literal notranslate"><span class="pre">max_buffered</span></code> seconds.</p>
+</dd>
+<dt><strong>recover</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>Attempt to silently recover lost streams that are recoverable (requires a
+<code class="docutils literal notranslate"><span class="pre">source_id</span></code> to be specified in the <a class="reference internal" href="mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a>).</p>
+</dd>
+<dt><strong>processing_flags</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/glossary.html#term-sequence" title="(in Python v3.12)"><span>sequence</span></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <code class="docutils literal notranslate"><span class="pre">'all'</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Set the post-processing options. By default, post-processing is disabled. Any
+combination of the processing flags is valid. The available flags are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'clocksync'</span></code>: Automatic clock synchronization, equivalent to
+manually adding the estimated
+<a class="reference internal" href="#mne_lsl.lsl.StreamInlet.time_correction" title="mne_lsl.lsl.StreamInlet.time_correction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">time_correction()</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'dejitter'</span></code>: Remove jitter on the received timestamps with a
+smoothing algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'monotize'</span></code>: Force the timestamps to be monotically ascending.
+This option should not be enable if <code class="docutils literal notranslate"><span class="pre">'dejitter'</span></code> is not enabled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'threadsafe'</span></code>: Post-processing is thread-safe, thus the same
+inlet can be read from multiple threads.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Attributes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.dtype" title="mne_lsl.lsl.StreamInlet.dtype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dtype</span></code></a></p></td>
+<td><p>Channel format of a stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.n_channels" title="mne_lsl.lsl.StreamInlet.n_channels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_channels</span></code></a></p></td>
+<td><p>Number of channels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.name" title="mne_lsl.lsl.StreamInlet.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>Name of the stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.samples_available" title="mne_lsl.lsl.StreamInlet.samples_available"><code class="xref py py-obj docutils literal notranslate"><span class="pre">samples_available</span></code></a></p></td>
+<td><p>Number of available samples on the <a class="reference internal" href="mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.sfreq" title="mne_lsl.lsl.StreamInlet.sfreq"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sfreq</span></code></a></p></td>
+<td><p>Sampling rate of the stream, according to the source (in Hz).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.stype" title="mne_lsl.lsl.StreamInlet.stype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stype</span></code></a></p></td>
+<td><p>Type of the stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.was_clock_reset" title="mne_lsl.lsl.StreamInlet.was_clock_reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">was_clock_reset</span></code></a></p></td>
+<td><p>True if the clock was potentially reset since the last call.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Methods</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.close_stream" title="mne_lsl.lsl.StreamInlet.close_stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_stream</span></code></a>()</p></td>
+<td><p>Drop the current data stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.flush" title="mne_lsl.lsl.StreamInlet.flush"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code></a>()</p></td>
+<td><p>Drop all queued and not-yet pulled samples.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.get_sinfo" title="mne_lsl.lsl.StreamInlet.get_sinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_sinfo</span></code></a>([timeout])</p></td>
+<td><p><a class="reference internal" href="mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a> corresponding to this Inlet.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.open_stream" title="mne_lsl.lsl.StreamInlet.open_stream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_stream</span></code></a>([timeout])</p></td>
+<td><p>Subscribe to a data stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.pull_chunk" title="mne_lsl.lsl.StreamInlet.pull_chunk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pull_chunk</span></code></a>([timeout, max_samples])</p></td>
+<td><p>Pull a chunk of samples from the inlet.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.pull_sample" title="mne_lsl.lsl.StreamInlet.pull_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pull_sample</span></code></a>([timeout])</p></td>
+<td><p>Pull a single sample from the inlet.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.time_correction" title="mne_lsl.lsl.StreamInlet.time_correction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_correction</span></code></a>([timeout])</p></td>
+<td><p>Retrieve an estimated time correction offset for the given stream.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.close_stream">
+<span class="sig-name descname"><span class="pre">close_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L194-L214"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.close_stream" title="Permalink to this definition">#</a></dt>
+<dd><p>Drop the current data stream.</p>
+<p>All samples that are still buffered or in flight will be dropped and
+transmission and buffering of data for this inlet will be stopped. This method
+is used if an application stops being interested in data from a source
+(temporarily or not) but keeps the outlet alive, to not waste unnecessary system
+and network resources.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>At the moment, <code class="docutils literal notranslate"><span class="pre">liblsl</span></code> is released in version 1.16. Closing and
+re-opening a stream does not work and new samples pushed to the outlet do
+not arrive at the inlet. c.f. this
+<a class="reference external" href="https://github.com/sccn/liblsl/issues/180">github issue</a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.flush">
+<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L402-L411"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.flush" title="Permalink to this definition">#</a></dt>
+<dd><p>Drop all queued and not-yet pulled samples.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>n_dropped</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Number of dropped samples.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.get_sinfo">
+<span class="sig-name descname"><span class="pre">get_sinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L458-L482"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.get_sinfo" title="Permalink to this definition">#</a></dt>
+<dd><p><a class="reference internal" href="mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a> corresponding to this Inlet.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>timeout</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Optional timeout (in seconds) of the operation. By default, timeout is
+disabled.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>sinfo</strong><span class="classifier"><a class="reference internal" href="mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamInfo</span></code></a></span></dt><dd><p>Description of the stream connected to the inlet.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.open_stream">
+<span class="sig-name descname"><span class="pre">open_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L162-L192"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.open_stream" title="Permalink to this definition">#</a></dt>
+<dd><p>Subscribe to a data stream.</p>
+<p>All samples pushed in at the other end from this moment onwards will be queued
+and eventually be delivered in response to
+<a class="reference internal" href="#mne_lsl.lsl.StreamInlet.pull_sample" title="mne_lsl.lsl.StreamInlet.pull_sample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pull_sample()</span></code></a> or
+<a class="reference internal" href="#mne_lsl.lsl.StreamInlet.pull_chunk" title="mne_lsl.lsl.StreamInlet.pull_chunk"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pull_chunk()</span></code></a> calls. Pulling a sample without
+subscribing to the stream with this method is permitted (the stream will be
+opened implicitly).</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>timeout</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Optional timeout (in seconds) of the operation. By default, timeout is
+disabled.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Opening a stream is a non-blocking operation. Thus, samples pushed on an outlet
+while the stream is not yet open will be missed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.pull_chunk">
+<span class="sig-name descname"><span class="pre">pull_chunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1024</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L301-L400"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.pull_chunk" title="Permalink to this definition">#</a></dt>
+<dd><p>Pull a chunk of samples from the inlet.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>timeout</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Optional timeout (in seconds) of the operation. None correspond to a very
+large value, effectively disabling the timeout. <code class="docutils literal notranslate"><span class="pre">0.</span></code> makes this function
+non-blocking even if no sample is available. See notes for additional
+details.</p>
+</dd>
+<dt><strong>max_samples</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Maximum number of samples to return. The function is blocking until this
+number of samples is available or until <code class="docutils literal notranslate"><span class="pre">timeout</span></code> is reached. See notes
+for additional details.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>samples</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape (n_samples, n_channels)</span></dt><dd><p>If the channel format is <code class="docutils literal notranslate"><span class="pre">'string'</span></code>, returns a list of list of values for
+each channel and sample. Each sublist represents an entire channel. Else,
+returns a numpy array of shape <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_channels)</span></code>.</p>
+</dd>
+<dt><strong>timestamps</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape (n_samples,)</span></dt><dd><p>Acquisition timestamp on the remote machine. To map the timestamp to the
+local clock of the client machine, add the estimated time correction return
+by <a class="reference internal" href="#mne_lsl.lsl.StreamInlet.time_correction" title="mne_lsl.lsl.StreamInlet.time_correction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">time_correction()</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The argument <code class="docutils literal notranslate"><span class="pre">timeout</span></code> and <code class="docutils literal notranslate"><span class="pre">max_samples</span></code> control the blocking behavior of
+the pull operation. If the number of available sample is inferior to
+<code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, the pull operation is blocking until <code class="docutils literal notranslate"><span class="pre">timeout</span></code> is reached.
+Thus, to return all the available samples at a given time, regardless of the
+number of samples requested, <code class="docutils literal notranslate"><span class="pre">timeout</span></code> must be set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<p>Note that if <code class="docutils literal notranslate"><span class="pre">timeout</span></code> is reached and no sample is available, empty
+<code class="docutils literal notranslate"><span class="pre">samples</span></code> and <code class="docutils literal notranslate"><span class="pre">timestamps</span></code> arrays are returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.pull_sample">
+<span class="sig-name descname"><span class="pre">pull_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L246-L299"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.pull_sample" title="Permalink to this definition">#</a></dt>
+<dd><p>Pull a single sample from the inlet.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>timeout</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Optional timeout (in seconds) of the operation. None correspond to a very
+large value, effectively disabling the timeout. <code class="docutils literal notranslate"><span class="pre">0.</span></code> makes this function
+non-blocking even if no sample is available. See notes for additional
+details.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>sample</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape (n_channels,)</span></dt><dd><p>If the channel format is <code class="docutils literal notranslate"><span class="pre">'string</span></code>, returns a list of values for each
+channel. Else, returns a numpy array of shape <code class="docutils literal notranslate"><span class="pre">(n_channels,)</span></code>.</p>
+</dd>
+<dt><strong>timestamp</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Acquisition timestamp on the remote machine. To map the timestamp to the
+local clock of the client machine, add the estimated time correction return
+by <a class="reference internal" href="#mne_lsl.lsl.StreamInlet.time_correction" title="mne_lsl.lsl.StreamInlet.time_correction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">time_correction()</span></code></a>. None if no sample was
+retrieved.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Note that if <code class="docutils literal notranslate"><span class="pre">timeout</span></code> is reached and no sample is available, an empty
+<code class="docutils literal notranslate"><span class="pre">sample</span></code> is returned and <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> is set to None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.time_correction">
+<span class="sig-name descname"><span class="pre">time_correction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/lsl/stream_inlet.py#L216-L244"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.time_correction" title="Permalink to this definition">#</a></dt>
+<dd><p>Retrieve an estimated time correction offset for the given stream.</p>
+<p>The first call to this function takes several milliseconds until a reliable
+first estimate is obtained. Subsequent calls are instantaneous (and rely on
+periodic background updates). The precision of these estimates should be below
+1 ms (empirically within +/-0.2 ms).</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>timeout</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Optional timeout (in seconds) of the operation. By default, timeout is
+disabled.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>time_correction</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a></span></dt><dd><p>Current estimate of the time correction. This number needs to be added to a
+timestamp that was remotely generated via <code class="docutils literal notranslate"><span class="pre">local_clock()</span></code> to map it into
+the <a class="reference internal" href="mne_lsl.lsl.local_clock.html#mne_lsl.lsl.local_clock" title="mne_lsl.lsl.local_clock"><code class="xref py py-func docutils literal notranslate"><span class="pre">local_clock()</span></code></a> domain of the client machine.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.dtype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.dtype" title="Permalink to this definition">#</a></dt>
+<dd><p>Channel format of a stream.</p>
+<p>All channels in a stream have the same format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dtype</span></code></a> | <code class="docutils literal notranslate"><span class="pre">&quot;string&quot;</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.n_channels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_channels</span></span><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.n_channels" title="Permalink to this definition">#</a></dt>
+<dd><p>Number of channels.</p>
+<p>A stream must have at least one channel. The number of channels remains constant
+for all samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.name" title="Permalink to this definition">#</a></dt>
+<dd><p>Name of the stream.</p>
+<p>The name of the stream is defined by the application creating the LSL outlet.
+Streams with identical names can coexist, at the cost of ambiguity for the
+recording application and/or the experimenter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.samples_available">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">samples_available</span></span><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.samples_available" title="Permalink to this definition">#</a></dt>
+<dd><p>Number of available samples on the <a class="reference internal" href="mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.sfreq">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sfreq</span></span><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.sfreq" title="Permalink to this definition">#</a></dt>
+<dd><p>Sampling rate of the stream, according to the source (in Hz).</p>
+<p>If a stream is irregularly sampled, the sampling rate is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.stype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stype</span></span><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.stype" title="Permalink to this definition">#</a></dt>
+<dd><p>Type of the stream.</p>
+<p>The content type is a short string, such as <code class="docutils literal notranslate"><span class="pre">&quot;EEG&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Gaze&quot;</span></code>, … which
+describes the content carried by the channel. If a stream contains mixed
+content, this value should be an empty string and the type should be stored in
+the description of individual channels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.lsl.StreamInlet.was_clock_reset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">was_clock_reset</span></span><a class="headerlink" href="#mne_lsl.lsl.StreamInlet.was_clock_reset" title="Permalink to this definition">#</a></dt>
+<dd><p>True if the clock was potentially reset since the last call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="examples-using-mne-lsl-lsl-streaminlet">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">mne_lsl.lsl.StreamInlet</span></code><a class="headerlink" href="#examples-using-mne-lsl-lsl-streaminlet" title="Permalink to this heading">#</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="During the development of a project, it&#x27;s very helpful to test on a mock LSL stream replicating..."><img alt="" src="../../_images/sphx_glr_10_player_thumb.png" />
+<p><a class="reference internal" href="../tutorials/10_player.html#sphx-glr-generated-tutorials-10-player-py"><span class="std std-ref">Introduction to the Player API</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Introduction to the Player API</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="An LSL stream is composed of samples received at a given time. Each device, each source, advert..."><img alt="" src="../../_images/sphx_glr_30_timestamps_thumb.png" />
+<p><a class="reference internal" href="../tutorials/30_timestamps.html#sphx-glr-generated-tutorials-30-timestamps-py"><span class="std std-ref">Stream timestamps</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Stream timestamps</div>
+</div></div></section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="mne_lsl.lsl.StreamOutlet.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">mne_lsl.lsl.StreamOutlet</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="mne_lsl.lsl.StreamInfo.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">mne_lsl.lsl.StreamInfo</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, M. Scheltienne, A. Desvachez, K. Lee
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/mne-tools/mne-lsl" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">mne_lsl.lsl.StreamInlet</a><ul>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet"><code class="docutils literal notranslate"><span class="pre">StreamInlet</span></code></a><ul>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.close_stream"><code class="docutils literal notranslate"><span class="pre">StreamInlet.close_stream()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.flush"><code class="docutils literal notranslate"><span class="pre">StreamInlet.flush()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.get_sinfo"><code class="docutils literal notranslate"><span class="pre">StreamInlet.get_sinfo()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.open_stream"><code class="docutils literal notranslate"><span class="pre">StreamInlet.open_stream()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.pull_chunk"><code class="docutils literal notranslate"><span class="pre">StreamInlet.pull_chunk()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.pull_sample"><code class="docutils literal notranslate"><span class="pre">StreamInlet.pull_sample()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.time_correction"><code class="docutils literal notranslate"><span class="pre">StreamInlet.time_correction()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.dtype"><code class="docutils literal notranslate"><span class="pre">StreamInlet.dtype</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.n_channels"><code class="docutils literal notranslate"><span class="pre">StreamInlet.n_channels</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.name"><code class="docutils literal notranslate"><span class="pre">StreamInlet.name</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.samples_available"><code class="docutils literal notranslate"><span class="pre">StreamInlet.samples_available</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.sfreq"><code class="docutils literal notranslate"><span class="pre">StreamInlet.sfreq</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.stype"><code class="docutils literal notranslate"><span class="pre">StreamInlet.stype</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.lsl.StreamInlet.was_clock_reset"><code class="docutils literal notranslate"><span class="pre">StreamInlet.was_clock_reset</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples-using-mne-lsl-lsl-streaminlet">Examples using <code class="docutils literal notranslate"><span class="pre">mne_lsl.lsl.StreamInlet</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=892f40e5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

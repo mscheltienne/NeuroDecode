@@ -1,0 +1,49 @@
+
+:orphan:
+
+.. _sphx_glr_generated_tutorials_sg_execution_times:
+
+
+Computation times
+=================
+**01:24.465** total execution time for 5 files **from generated/tutorials**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_generated_tutorials_40_epochs.py` (``40_epochs.py``)
+     - 00:53.328
+     - 730.0
+   * - :ref:`sphx_glr_generated_tutorials_30_stream_manual.py` (``30_stream_manual.py``)
+     - 00:12.604
+     - 265.4
+   * - :ref:`sphx_glr_generated_tutorials_20_player_annotations.py` (``20_player_annotations.py``)
+     - 00:10.176
+     - 189.6
+   * - :ref:`sphx_glr_generated_tutorials_00_introduction.py` (``00_introduction.py``)
+     - 00:05.145
+     - 276.4
+   * - :ref:`sphx_glr_generated_tutorials_10_low_level_API.py` (``10_low_level_API.py``)
+     - 00:03.212
+     - 186.4

@@ -1,0 +1,27 @@
+.. NOTE: we use cross-references to highlight new functions and classes.
+   Please follow the examples below, so the changelog page will have a link to
+   the function/class documentation.
+
+.. NOTE: there are 3 separate sections for changes, based on type:
+   - "Enhancements" for new features
+   - "Bugs" for bug fixes
+   - "API changes" for backward-incompatible changes
+
+.. NOTE: You can use the :pr:`xx` and :issue:`xx` role to x-ref to a GitHub PR
+   or issue from this project.
+
+:hide-toc:
+
+.. include:: ./authors.inc
+
+.. _latest:
+
+Version 1.6
+===========
+
+- Add JOSS draft and workflow to generate the PDF (:pr:`316` by `Mathieu Scheltienne`_)
+- Improve disconnection of :class:`~mne_lsl.stream.EpochsStream` especially when an exception is raised during initialization (:pr:`317` by `Mathieu Scheltienne`_)
+- Improve total code coverage (:pr:`317` by `Mathieu Scheltienne`_)
+- Add mailmap to the repository (:pr:`327` by `Daniel McCloy`_)
+- Fix indexing when replaying datasets from non-preloaded :class:`~mne.io.Raw` (:pr:`330` by `Toni M. Brotons`_)
+- Safer parse of channel names in the legacy stream viewer (by `Mathieu Scheltienne`_)

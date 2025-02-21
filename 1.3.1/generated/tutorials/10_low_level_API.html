@@ -1,0 +1,582 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Player with annotations" href="20_player_annotations.html" /><link rel="prev" title="Introduction to real-time LSL streams" href="00_introduction.html" />
+
+    <link rel="shortcut icon" href="../../_static/logo-no-mne.svg"/><!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+        <title>Low-level LSL API - MNE-LSL</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css?v=0bd98ae2" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">MNE-LSL</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo-mne-hex.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../resources/install.html">Install</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API References</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/most-used%20classes.html">Most-used classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/lsl%20%28low-level%29.html">LSL (low-level)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/legacy.html">Legacy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/command_line.html">Command line</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_introduction.html">Introduction to real-time LSL streams</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Low-level LSL API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20_player_annotations.html">Player with annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../changes/index.html">Changelog</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Changelog</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.3.html">Version 1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.3.html#version-1-3-1">Version 1.3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.2.html">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.1.html">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-generated-tutorials-10-low-level-api-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="low-level-lsl-api">
+<span id="tut-low-level-api"></span><span id="sphx-glr-generated-tutorials-10-low-level-api-py"></span><h1>Low-level LSL API<a class="headerlink" href="#low-level-lsl-api" title="Link to this heading">🔗</a></h1>
+<p>LSL is a library designed for streaming time series data across different platforms and
+programming languages. The <a class="reference external" href="https://github.com/sccn/liblsl">core library</a> is primarily written in C++, and
+bindings are accessible for Python, C#, Java, MATLAB, and Unity, among others. You can
+find a comprehensive list <a class="reference external" href="https://github.com/sccn/labstreaminglayer/tree/master/LSL">here</a>.</p>
+<p>MNE-LSL provides a reimplementation of the <a class="reference external" href="https://github.com/labstreaminglayer/pylsl">python binding</a>, known as
+<code class="docutils literal notranslate"><span class="pre">pylsl</span></code>, within the <code class="docutils literal notranslate"><span class="pre">mne_lsl.lsl</span></code> module. It introduces additional functionalities
+to simplify the low-level interaction with LSL streams. Moreover, it enhances the
+detection of liblsl on your system and can retrieve a compatible version online if
+necessary. The differences between <code class="docutils literal notranslate"><span class="pre">pylsl</span></code> and <code class="docutils literal notranslate"><span class="pre">mne_lsl.lsl</span></code> are detailed
+<a class="reference internal" href="../../resources/pylsl.html#differences-with-pylsl"><span class="std std-ref">here</span></a>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">mne_lsl.lsl</span> <span class="kn">import</span> <span class="p">(</span>
+    <a href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-class"><span class="n">StreamInfo</span></a><span class="p">,</span> <a href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-class"><span class="n">StreamInlet</span></a><span class="p">,</span> <a href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-class"><span class="n">StreamOutlet</span></a><span class="p">,</span> <a href="../api/mne_lsl.lsl.local_clock.html#mne_lsl.lsl.local_clock" title="mne_lsl.lsl.local_clock" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-function"><span class="n">local_clock</span></a><span class="p">,</span> <a href="../api/mne_lsl.lsl.resolve_streams.html#mne_lsl.lsl.resolve_streams" title="mne_lsl.lsl.resolve_streams" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-function"><span class="n">resolve_streams</span></a>
+<span class="p">)</span>
+</pre></div>
+</div>
+<section id="creating-a-stream">
+<h2>Creating a stream<a class="headerlink" href="#creating-a-stream" title="Link to this heading">🔗</a></h2>
+<p>To create a stream, you must first define its properties. This is achieved by creating
+a <a class="reference internal" href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a> object, which specifies the stream’s name, type,
+source and properties. Convenience methods are available to set the channel
+properties, including <a class="reference internal" href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo.set_channel_info" title="mne_lsl.lsl.StreamInfo.set_channel_info"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_channel_info()</span></code></a>, which uses a
+<a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Info</span></code></a> object as source.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sinfo</span> <span class="o">=</span> <a href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-class"><span class="n">StreamInfo</span></a><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-stream&quot;</span><span class="p">,</span>
+    <span class="n">stype</span><span class="o">=</span><span class="s2">&quot;eeg&quot;</span><span class="p">,</span>
+    <span class="n">n_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">sfreq</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+    <span class="n">source_id</span><span class="o">=</span><a href="https://docs.python.org/3/library/uuid.html#uuid.uuid4" title="uuid.uuid4" class="sphx-glr-backref-module-uuid sphx-glr-backref-type-py-function"><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span></a><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">sinfo</span><span class="o">.</span><span class="n">set_channel_names</span><span class="p">([</span><span class="s2">&quot;Fz&quot;</span><span class="p">,</span> <span class="s2">&quot;Cz&quot;</span><span class="p">,</span> <span class="s2">&quot;Oz&quot;</span><span class="p">])</span>
+<span class="n">sinfo</span><span class="o">.</span><span class="n">set_channel_types</span><span class="p">(</span><span class="s2">&quot;eeg&quot;</span><span class="p">)</span>
+<span class="n">sinfo</span><span class="o">.</span><span class="n">set_channel_units</span><span class="p">(</span><span class="s2">&quot;microvolts&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once the <a class="reference internal" href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a> object is created, a
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a> can be instantiated to create the stream.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">outlet</span> <span class="o">=</span> <a href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-class"><span class="n">StreamOutlet</span></a><span class="p">(</span><span class="n">sinfo</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="discover-streams">
+<h2>Discover streams<a class="headerlink" href="#discover-streams" title="Link to this heading">🔗</a></h2>
+<p>At this point, the <a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a> is available on the network. The
+function <a class="reference internal" href="../api/mne_lsl.lsl.resolve_streams.html#mne_lsl.lsl.resolve_streams" title="mne_lsl.lsl.resolve_streams"><code class="xref py py-func docutils literal notranslate"><span class="pre">resolve_streams()</span></code></a> discovers all available streams on the
+network. This operation is commonly named the stream resolution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The stream resolution can be restricted by providing the <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">stype</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">source_id</span></code> arguments.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">streams</span></a> <span class="o">=</span> <a href="../api/mne_lsl.lsl.resolve_streams.html#mne_lsl.lsl.resolve_streams" title="mne_lsl.lsl.resolve_streams" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-function"><span class="n">resolve_streams</span></a><span class="p">()</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">streams</span></a><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">streams</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt; sInfo &#39;my-stream&#39; &gt;
+  | Type: eeg
+  | Sampling: 1024.0 Hz
+  | Number of channels: 3
+  | Data type: &lt;class &#39;numpy.float32&#39;&gt;
+  | Source: fb98448160144d33b21860e5cea98ca3
+</pre></div>
+</div>
+<p>The resolution retrieves only the stream basic properties. The channel properties,
+stored in the stream description in an XML element tree, are absent from a
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a> returned by the resolution function.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">streams</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_channel_names</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="connect-to-a-stream">
+<h2>Connect to a Stream<a class="headerlink" href="#connect-to-a-stream" title="Link to this heading">🔗</a></h2>
+<p>To connect to a stream, a <a class="reference internal" href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInlet</span></code></a> object must be created
+using the resolved <a class="reference internal" href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a>. Once the stream is opened with
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet.open_stream" title="mne_lsl.lsl.StreamInlet.open_stream"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_stream()</span></code></a>, the connection is established and
+both the properties and data become available.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">inlet</span> <span class="o">=</span> <a href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-class"><span class="n">StreamInlet</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">streams</span></a><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">inlet</span><span class="o">.</span><span class="n">open_stream</span><span class="p">()</span>
+<span class="n">sinfo</span> <span class="o">=</span> <span class="n">inlet</span><span class="o">.</span><span class="n">get_sinfo</span><span class="p">()</span>  <span class="c1"># retrieve stream information with all properties</span>
+</pre></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sinfo</span><span class="o">.</span><span class="n">get_channel_names</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;Fz&#39;, &#39;Cz&#39;, &#39;Oz&#39;]
+</pre></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sinfo</span><span class="o">.</span><span class="n">get_channel_types</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;eeg&#39;, &#39;eeg&#39;, &#39;eeg&#39;]
+</pre></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sinfo</span><span class="o">.</span><span class="n">get_channel_units</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;microvolts&#39;, &#39;microvolts&#39;, &#39;microvolts&#39;]
+</pre></div>
+</div>
+<p>An <a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Info</span></code></a> can be obtained directly with
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo.get_channel_info" title="mne_lsl.lsl.StreamInfo.get_channel_info"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_channel_info()</span></code></a>. If the information contained in the
+XML element tree can not be parsed, default values are used. For instance, the channel
+names are replaced by the channel numbers similarly to <a class="reference external" href="https://mne.tools/stable/generated/mne.create_info.html#mne.create_info" title="(in MNE v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.create_info()</span></code></a>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sinfo</span><span class="o">.</span><span class="n">get_channel_info</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<details open>
+    <summary><strong>General</strong></summary>
+    <table class="table table-hover table-striped table-sm table-responsive small">
+        <tr>
+            <th>Measurement date</th>
+
+            <td>Unknown</td>
+
+        </tr>
+        <tr>
+            <th>Experimenter</th>
+
+            <td>Unknown</td>
+
+        </tr>
+        <tr>
+            <th>Participant</th>
+
+            <td>Unknown</td>
+
+        </tr>
+    </table>
+    </details>
+    <details open>
+        <summary><strong>Channels</strong></summary>
+        <table class="table table-hover table-striped table-sm table-responsive small">
+            <tr>
+                <th>Digitized points</th>
+
+                <td>Not available</td>
+
+            </tr>
+            <tr>
+                <th>Good channels</th>
+                <td>3 EEG</td>
+            </tr>
+            <tr>
+                <th>Bad channels</th>
+                <td>None</td>
+            </tr>
+            <tr>
+                <th>EOG channels</th>
+                <td>Not available</td>
+            </tr>
+            <tr>
+                <th>ECG channels</th>
+                <td>Not available</td>
+            </tr>
+        </table>
+        </details>
+        <details open>
+            <summary><strong>Data</strong></summary>
+            <table class="table table-hover table-striped table-sm table-responsive small">
+
+                <tr>
+                    <th>Sampling frequency</th>
+                    <td>1024.00 Hz</td>
+                </tr>
+
+
+                <tr>
+                    <th>Highpass</th>
+                    <td>0.00 Hz</td>
+                </tr>
+
+
+                <tr>
+                    <th>Lowpass</th>
+                    <td>512.00 Hz</td>
+                </tr>
+
+
+
+
+            </table>
+            </details>
+</div>
+<br />
+<br /></section>
+<section id="push-pull-operations">
+<h2>Push/Pull operations<a class="headerlink" href="#push-pull-operations" title="Link to this heading">🔗</a></h2>
+<p>For new data to be received, it first need to be pushed on the
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a>. 2 methods are available:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet.push_sample" title="mne_lsl.lsl.StreamOutlet.push_sample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">push_sample()</span></code></a> to push an individual sample of shape
+(n_channels,)</p></li>
+<li><p><a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet.push_chunk" title="mne_lsl.lsl.StreamOutlet.push_chunk"><code class="xref py py-meth docutils literal notranslate"><span class="pre">push_chunk()</span></code></a> to push a chunk of samples of shape
+(n_samples, n_channels)</p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">outlet</span><span class="o">.</span><span class="n">push_sample</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>Once pushed, samples become available at the client end. 2 methods are available to
+retrieve samples:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet.pull_sample" title="mne_lsl.lsl.StreamInlet.pull_sample"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pull_sample()</span></code></a> to pull an individual sample of shape
+(n_channels,)</p></li>
+<li><p><a class="reference internal" href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet.pull_chunk" title="mne_lsl.lsl.StreamInlet.pull_chunk"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pull_chunk()</span></code></a> to pull a chunk of samples of shape
+(n_samples, n_channels)</p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># give a bit of time to the documentation build after the execution of the last cell</span>
+<a href="https://docs.python.org/3/library/time.html#time.sleep" title="time.sleep" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">sleep</span></a><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">inlet</span><span class="o">.</span><span class="n">samples_available</span> <span class="o">==</span> <span class="mi">1</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a> <span class="o">=</span> <span class="n">inlet</span><span class="o">.</span><span class="n">pull_sample</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">inlet</span><span class="o">.</span><span class="n">samples_available</span> <span class="o">==</span> <span class="mi">0</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>array([1., 2., 3.], dtype=float32)
+</pre></div>
+</div>
+</section>
+<section id="lsl-clock">
+<h2>LSL clock<a class="headerlink" href="#lsl-clock" title="Link to this heading">🔗</a></h2>
+<p>The local system timestamp is retrieved with <a class="reference internal" href="../api/mne_lsl.lsl.local_clock.html#mne_lsl.lsl.local_clock" title="mne_lsl.lsl.local_clock"><code class="xref py py-func docutils literal notranslate"><span class="pre">local_clock()</span></code></a>. This
+local timestamp can be compared with the LSL timestamp from acquired data.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">now</span></a> <span class="o">=</span> <a href="../api/mne_lsl.lsl.local_clock.html#mne_lsl.lsl.local_clock" title="mne_lsl.lsl.local_clock" class="sphx-glr-backref-module-mne_lsl-lsl sphx-glr-backref-type-py-function"><span class="n">local_clock</span></a><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Timestamp of the acquired data: </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current time: </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">now</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Delta: </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">now</span></a><span class="w"> </span><span class="o">-</span><span class="w"> </span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Timestamp of the acquired data: 16514.772947001
+Current time: 16514.93086523
+Delta: 0.15791822899700492 seconds
+</pre></div>
+</div>
+</section>
+<section id="free-resources">
+<h2>Free resources<a class="headerlink" href="#free-resources" title="Link to this heading">🔗</a></h2>
+<p>When you are done with a <a class="reference internal" href="../api/mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInlet</span></code></a> or
+<a class="reference internal" href="../api/mne_lsl.lsl.StreamOutlet.html#mne_lsl.lsl.StreamOutlet" title="mne_lsl.lsl.StreamOutlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamOutlet</span></code></a>, don’t forget to free the resources they both use.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">inlet</span><span class="o">.</span><span class="n">close_stream</span><span class="p">()</span>
+<span class="k">del</span> <span class="n">inlet</span>
+<span class="k">del</span> <span class="n">outlet</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.978 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  22 MB</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-generated-tutorials-10-low-level-api-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/dda1526cefa85fd2bf81fe689772addb/10_low_level_API.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">10_low_level_API.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/3398261e6359dbd9878364b1fc3b1009/10_low_level_API.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">10_low_level_API.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="20_player_annotations.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Player with annotations</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="00_introduction.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Introduction to real-time LSL streams</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, M. Scheltienne, A. Desvachez, K. Lee
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/mne-tools/mne-lsl" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Low-level LSL API</a><ul>
+<li><a class="reference internal" href="#creating-a-stream">Creating a stream</a></li>
+<li><a class="reference internal" href="#discover-streams">Discover streams</a></li>
+<li><a class="reference internal" href="#connect-to-a-stream">Connect to a Stream</a></li>
+<li><a class="reference internal" href="#push-pull-operations">Push/Pull operations</a></li>
+<li><a class="reference internal" href="#lsl-clock">LSL clock</a></li>
+<li><a class="reference internal" href="#free-resources">Free resources</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=9912e11f"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

@@ -1,0 +1,9 @@
+﻿mne\_lsl.add\_file\_handler
+===========================
+
+.. currentmodule:: mne_lsl
+
+.. autofunction:: add_file_handler
+
+.. minigallery:: mne_lsl.add_file_handler
+    :add-heading:

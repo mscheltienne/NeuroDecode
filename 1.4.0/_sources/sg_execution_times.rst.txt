@@ -1,0 +1,55 @@
+
+:orphan:
+
+.. _sphx_glr_sg_execution_times:
+
+
+Computation times
+=================
+**02:03.096** total execution time for 7 files **from all galleries**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_generated_examples_20_bandpower.py` (``../examples/20_bandpower.py``)
+     - 00:48.788
+     - 86.2
+   * - :ref:`sphx_glr_generated_examples_10_peak_detection.py` (``../examples/10_peak_detection.py``)
+     - 00:37.668
+     - 41.4
+   * - :ref:`sphx_glr_generated_tutorials_30_stream_manual.py` (``../tutorials/30_stream_manual.py``)
+     - 00:16.583
+     - 107.6
+   * - :ref:`sphx_glr_generated_examples_00_player_separate_process.py` (``../examples/00_player_separate_process.py``)
+     - 00:09.601
+     - 11.2
+   * - :ref:`sphx_glr_generated_tutorials_00_introduction.py` (``../tutorials/00_introduction.py``)
+     - 00:07.168
+     - 123.6
+   * - :ref:`sphx_glr_generated_tutorials_10_low_level_API.py` (``../tutorials/10_low_level_API.py``)
+     - 00:03.288
+     - 22.4
+   * - :ref:`sphx_glr_generated_tutorials_20_player_annotations.py` (``../tutorials/20_player_annotations.py``)
+     - 00:00.000
+     - 9.2

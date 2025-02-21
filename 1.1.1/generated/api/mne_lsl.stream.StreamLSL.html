@@ -1,0 +1,1249 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="mne_lsl.player.PlayerLSL" href="mne_lsl.player.PlayerLSL.html" /><link rel="prev" title="Most-used classes" href="../../api/most-used%20classes.html" />
+
+    <link rel="shortcut icon" href="../../_static/logo-no-mne.svg"/><!-- Generated with Sphinx 7.1.2 and Furo 2023.09.10 -->
+        <title>mne_lsl.stream.StreamLSL - MNE-LSL</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css?v=0bd98ae2" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">MNE-LSL</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo-mne-hex.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/install.html">Install</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API References</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/most-used%20classes.html">Most-used classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/lsl%20%28low-level%29.html">LSL (low-level)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/legacy.html">Legacy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/command_line.html">Command line</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_stream.html">Introduction to the Stream API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/10_player.html">Introduction to the Player API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/20_stream_meas_info.html">Stream information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/30_timestamps.html">Stream timestamps</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../changes/index.html">Changelog</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Changelog</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.1.html">Version 1.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.1.html#version-1-1-0">Version 1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="mne-lsl-stream-streamlsl">
+<h1>mne_lsl.stream.StreamLSL<a class="headerlink" href="#mne-lsl-stream-streamlsl" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mne_lsl.stream.</span></span><span class="sig-name descname"><span class="pre">StreamLSL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bufsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/stream_lsl.py#L30-L335"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL" title="Permalink to this definition">#</a></dt>
+<dd><p>Stream object representing a single LSL stream.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>bufsize</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a></span></dt><dd><p>Size of the buffer keeping track of the data received from the stream. If
+the stream sampling rate <code class="docutils literal notranslate"><span class="pre">sfreq</span></code> is regular, <code class="docutils literal notranslate"><span class="pre">bufsize</span></code> is expressed in
+seconds. The buffer will hold the last <code class="docutils literal notranslate"><span class="pre">bufsize</span> <span class="pre">*</span> <span class="pre">sfreq</span></code> samples (ceiled).
+If the stream sampling rate <code class="docutils literal notranslate"><span class="pre">sfreq</span></code> is irregular, <code class="docutils literal notranslate"><span class="pre">bufsize</span></code> is
+expressed in samples. The buffer will hold the last <code class="docutils literal notranslate"><span class="pre">bufsize</span></code> samples.</p>
+</dd>
+<dt><strong>name</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Name of the LSL stream.</p>
+</dd>
+<dt><strong>stype</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Type of the LSL stream.</p>
+</dd>
+<dt><strong>source_id</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>ID of the source of the LSL stream.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The 3 arguments <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">stype</span></code>, and <code class="docutils literal notranslate"><span class="pre">source_id</span></code> must uniquely identify an
+LSL stream. If this is not possible, please resolve the available LSL streams
+with <a class="reference internal" href="mne_lsl.lsl.resolve_streams.html#mne_lsl.lsl.resolve_streams" title="mne_lsl.lsl.resolve_streams"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne_lsl.lsl.resolve_streams()</span></code></a> and create an inlet with
+<a class="reference internal" href="mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInlet</span></code></a>.</p>
+<p class="rubric">Attributes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.ch_names" title="mne_lsl.stream.StreamLSL.ch_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ch_names</span></code></a></p></td>
+<td><p>Name of the channels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.compensation_grade" title="mne_lsl.stream.StreamLSL.compensation_grade"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compensation_grade</span></code></a></p></td>
+<td><p>The current gradient compensation grade.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.connected" title="mne_lsl.stream.StreamLSL.connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connected</span></code></a></p></td>
+<td><p>Connection status of the stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.dtype" title="mne_lsl.stream.StreamLSL.dtype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dtype</span></code></a></p></td>
+<td><p>Channel format of the stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.info" title="mne_lsl.stream.StreamLSL.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a></p></td>
+<td><p>Info of the LSL stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.n_buffer" title="mne_lsl.stream.StreamLSL.n_buffer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_buffer</span></code></a></p></td>
+<td><p>Number of samples that can be stored in the buffer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_new_samples</span></code></a></p></td>
+<td><p>Number of new samples available in the buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.name" title="mne_lsl.stream.StreamLSL.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>Name of the LSL stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.sinfo" title="mne_lsl.stream.StreamLSL.sinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sinfo</span></code></a></p></td>
+<td><p>StreamInfo of the connected stream.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.source_id" title="mne_lsl.stream.StreamLSL.source_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source_id</span></code></a></p></td>
+<td><p>ID of the source of the LSL stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.stype" title="mne_lsl.stream.StreamLSL.stype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stype</span></code></a></p></td>
+<td><p>Type of the LSL stream.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Methods</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.add_reference_channels" title="mne_lsl.stream.StreamLSL.add_reference_channels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_reference_channels</span></code></a>(ref_channels[, ref_units])</p></td>
+<td><p>Add EEG reference channels to data that consists of all zeros.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.anonymize" title="mne_lsl.stream.StreamLSL.anonymize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anonymize</span></code></a>([daysback, keep_his, verbose])</p></td>
+<td><p>Anonymize the measurement information in-place.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.connect" title="mne_lsl.stream.StreamLSL.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a>([acquisition_delay, ...])</p></td>
+<td><p>Connect to the LSL stream and initiate data collection in the buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.disconnect" title="mne_lsl.stream.StreamLSL.disconnect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disconnect</span></code></a>()</p></td>
+<td><p>Disconnect from the LSL stream and interrupt data collection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.drop_channels" title="mne_lsl.stream.StreamLSL.drop_channels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_channels</span></code></a>(ch_names)</p></td>
+<td><p>Drop channel(s).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.filter" title="mne_lsl.stream.StreamLSL.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>()</p></td>
+<td><p>Filter the stream.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_channel_types" title="mne_lsl.stream.StreamLSL.get_channel_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_channel_types</span></code></a>([picks, unique, only_data_chs])</p></td>
+<td><p>Get a list of channel type for each channel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_channel_units" title="mne_lsl.stream.StreamLSL.get_channel_units"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_channel_units</span></code></a>([picks, only_data_chs])</p></td>
+<td><p>Get a list of channel unit for each channel.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data</span></code></a>([winsize, picks])</p></td>
+<td><p>Retrieve the latest data from the buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_montage" title="mne_lsl.stream.StreamLSL.get_montage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_montage</span></code></a>()</p></td>
+<td><p>Get a DigMontage from instance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pick</span></code></a>(picks[, exclude])</p></td>
+<td><p>Pick a subset of channels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.plot" title="mne_lsl.stream.StreamLSL.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>()</p></td>
+<td><p>Open a real-time stream viewer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.plot_sensors" title="mne_lsl.stream.StreamLSL.plot_sensors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_sensors</span></code></a>([kind, ch_type, title, ...])</p></td>
+<td><p>Plot sensor positions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.record" title="mne_lsl.stream.StreamLSL.record"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record</span></code></a>()</p></td>
+<td><p>Record the stream data to disk.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.rename_channels" title="mne_lsl.stream.StreamLSL.rename_channels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rename_channels</span></code></a>(mapping[, allow_duplicates, ...])</p></td>
+<td><p>Rename channels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_bipolar_reference" title="mne_lsl.stream.StreamLSL.set_bipolar_reference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_bipolar_reference</span></code></a>()</p></td>
+<td><p>Set a bipolar reference.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_channel_types" title="mne_lsl.stream.StreamLSL.set_channel_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_channel_types</span></code></a>(mapping, *[, ...])</p></td>
+<td><p>Define the sensor type of channels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_channel_units" title="mne_lsl.stream.StreamLSL.set_channel_units"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_channel_units</span></code></a>(mapping)</p></td>
+<td><p>Define the channel unit multiplication factor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_eeg_reference" title="mne_lsl.stream.StreamLSL.set_eeg_reference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_eeg_reference</span></code></a>(ref_channels[, ch_type])</p></td>
+<td><p>Specify which reference to use for EEG-like data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_meas_date" title="mne_lsl.stream.StreamLSL.set_meas_date"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_meas_date</span></code></a>(meas_date)</p></td>
+<td><p>Set the measurement start date.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_montage" title="mne_lsl.stream.StreamLSL.set_montage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_montage</span></code></a>(montage[, match_case, ...])</p></td>
+<td><p>Set EEG/sEEG/ECoG/DBS/fNIRS channel positions and digitization points.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.add_reference_channels">
+<span class="sig-name descname"><span class="pre">add_reference_channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L88-L208"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.add_reference_channels" title="Permalink to this definition">#</a></dt>
+<dd><p>Add EEG reference channels to data that consists of all zeros.</p>
+<p>Adds EEG reference channels that are not part of the streamed data. This is
+useful when you need to re-reference your data to different channels. These
+added channels will consist of all zeros.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>ref_channels</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Name of the electrode(s) which served as the reference in the
+recording. If a name is provided, a corresponding channel is added
+and its data is set to 0. This is useful for later re-referencing.</p>
+</dd>
+<dt><strong>ref_units</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The unit or unit multiplication factor of the reference channels. The unit
+can be given as a human-readable string or as a unit multiplication factor,
+e.g. <code class="docutils literal notranslate"><span class="pre">-6</span></code> for microvolts corresponding to <code class="docutils literal notranslate"><span class="pre">1e-6</span></code>.
+If not provided, the added EEG reference channel has a unit multiplication
+factor set to <code class="docutils literal notranslate"><span class="pre">0</span></code> which corresponds to Volts. Use
+<code class="docutils literal notranslate"><span class="pre">Stream.set_channel_units</span></code> to change the unit multiplication factor.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.anonymize">
+<span class="sig-name descname"><span class="pre">anonymize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daysback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_his</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L210-L231"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.anonymize" title="Permalink to this definition">#</a></dt>
+<dd><p>Anonymize the measurement information in-place.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>daysback</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Number of days to subtract from all dates.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default), the acquisition date, <code class="docutils literal notranslate"><span class="pre">info['meas_date']</span></code>,
+will be set to <code class="docutils literal notranslate"><span class="pre">January</span> <span class="pre">1ˢᵗ,</span> <span class="pre">2000</span></code>. This parameter is ignored if
+<code class="docutils literal notranslate"><span class="pre">info['meas_date']</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> (i.e., no acquisition date has been set).</p>
+</dd>
+<dt><strong>keep_his</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">his_id</span></code> of <code class="docutils literal notranslate"><span class="pre">subject_info</span></code> will <strong>not</strong> be overwritten.
+Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This could mean that <code class="docutils literal notranslate"><span class="pre">info</span></code> is not fully
+anonymized. Use with caution.</p>
+</div>
+</dd>
+<dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Sets the verbosity level. The verbosity increases gradually between
+<code class="docutils literal notranslate"><span class="pre">&quot;CRITICAL&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;DEBUG&quot;</span></code>.
+If None is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>.
+If a bool is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code> for False and
+to <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> for True.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Removes potentially identifying information if it exists in <code class="docutils literal notranslate"><span class="pre">info</span></code>.
+Specifically for each of the following we use:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>meas_date, file_id, meas_id</dt><dd><p>A default value, or as specified by <code class="docutils literal notranslate"><span class="pre">daysback</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>subject_info</dt><dd><p>Default values, except for ‘birthday’ which is adjusted
+to maintain the subject age.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>experimenter, proj_name, description</dt><dd><p>Default strings.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>utc_offset</dt><dd><p><code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>proj_id</dt><dd><p>Zeros.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>proc_history</dt><dd><p>Dates use the <code class="docutils literal notranslate"><span class="pre">meas_date</span></code> logic, and experimenter a default string.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>helium_info, device_info</dt><dd><p>Dates use the <code class="docutils literal notranslate"><span class="pre">meas_date</span></code> logic, meta info uses defaults.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>If <code class="docutils literal notranslate"><span class="pre">info['meas_date']</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it will remain <code class="docutils literal notranslate"><span class="pre">None</span></code> during processing
+the above fields.</p>
+<p>Operates in place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">acquisition_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processing_flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/stream_lsl.py#L92-L194"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.connect" title="Permalink to this definition">#</a></dt>
+<dd><p>Connect to the LSL stream and initiate data collection in the buffer.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>acquisition_delay</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a></span></dt><dd><p>Delay in seconds between 2 acquisition during which chunks of data are
+pulled from the <a class="reference internal" href="mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet" title="mne_lsl.lsl.StreamInlet"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInlet</span></code></a>.</p>
+</dd>
+<dt><strong>processing_flags</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <code class="docutils literal notranslate"><span class="pre">'all'</span></code> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Set the post-processing options. By default, post-processing is disabled.
+Any combination of the processing flags is valid. The available flags are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'clocksync'</span></code>: Automatic clock synchronization, equivalent to
+manually adding the estimated
+<a class="reference internal" href="mne_lsl.lsl.StreamInlet.html#mne_lsl.lsl.StreamInlet.time_correction" title="mne_lsl.lsl.StreamInlet.time_correction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">time_correction()</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'dejitter'</span></code>: Remove jitter on the received timestamps with a
+smoothing algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'monotize'</span></code>: Force the timestamps to be monotically ascending.
+This option should not be enable if <code class="docutils literal notranslate"><span class="pre">'dejitter'</span></code> is not enabled.</p></li>
+</ul>
+</dd>
+<dt><strong>timeout</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Optional timeout (in seconds) of the operation. <code class="docutils literal notranslate"><span class="pre">None</span></code> disables the
+timeout. The timeout value is applied once to every operation supporting it.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If all 3 stream identifiers <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">stype</span></code> and <code class="docutils literal notranslate"><span class="pre">source_id</span></code> are left to
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, resolution of the available streams will require a full <code class="docutils literal notranslate"><span class="pre">timeout</span></code>,
+blocking the execution until this function returns. If at least one of the 3
+stream identifiers is specified, resolution will stop as soon as one stream
+matching the identifier is found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/stream_lsl.py#L196-L201"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.disconnect" title="Permalink to this definition">#</a></dt>
+<dd><p>Disconnect from the LSL stream and interrupt data collection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.drop_channels">
+<span class="sig-name descname"><span class="pre">drop_channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch_names</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L280-L304"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.drop_channels" title="Permalink to this definition">#</a></dt>
+<dd><p>Drop channel(s).</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>ch_names</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Name or list of names of channels to remove.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pick</span></code></a></dt><dd></dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L306-L309"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.filter" title="Permalink to this definition">#</a></dt>
+<dd><p>Filter the stream. Not implemented.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.get_channel_types">
+<span class="sig-name descname"><span class="pre">get_channel_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">picks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_data_chs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L311-L318"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.get_channel_types" title="Permalink to this definition">#</a></dt>
+<dd><p>Get a list of channel type for each channel.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>picks</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.26)"><span>array_like</span></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slice</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Channels to include. Slices and lists of integers will be interpreted as 
+channel indices. In lists, channel <em>type</em> strings (e.g., <code class="docutils literal notranslate"><span class="pre">['meg',</span> 
+<span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
+<code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
+string values “all” to pick all channels, or “data” to pick <a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.6)"><span class="xref std std-term">data 
+channels</span></a>. None (default) will pick all channels. Note that channels in 
+<code class="docutils literal notranslate"><span class="pre">info['bads']</span></code> <em>will be included</em> if their names or indices are 
+explicitly provided.</p>
+</dd>
+<dt><strong>unique</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>Whether to return only unique channel types. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt><strong>only_data_chs</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>Whether to ignore non-data channels. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>channel_types</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>The channel types.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.get_channel_units">
+<span class="sig-name descname"><span class="pre">get_channel_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">picks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_data_chs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L320-L349"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.get_channel_units" title="Permalink to this definition">#</a></dt>
+<dd><p>Get a list of channel unit for each channel.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>picks</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.26)"><span>array_like</span></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slice</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Channels to include. Slices and lists of integers will be interpreted as 
+channel indices. In lists, channel <em>type</em> strings (e.g., <code class="docutils literal notranslate"><span class="pre">['meg',</span> 
+<span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
+<code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
+string values “all” to pick all channels, or “data” to pick <a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.6)"><span class="xref std std-term">data 
+channels</span></a>. None (default) will pick all channels. Note that channels in 
+<code class="docutils literal notranslate"><span class="pre">info['bads']</span></code> <em>will be included</em> if their names or indices are 
+explicitly provided.</p>
+</dd>
+<dt><strong>only_data_chs</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>Whether to ignore non-data channels. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>channel_units</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> of shape (2,)</span></dt><dd><p>A list of 2-element tuples. The first element contains the unit FIFF code
+and its associated name, e.g. <code class="docutils literal notranslate"><span class="pre">107</span> <span class="pre">(FIFF_UNIT_V)</span></code> for Volts. The second
+element contains the unit multiplication factor, e.g. <code class="docutils literal notranslate"><span class="pre">-6</span> <span class="pre">(FIFF_UNITM_MU)</span></code>
+for micro (corresponds to <code class="docutils literal notranslate"><span class="pre">1e-6</span></code>).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">winsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">picks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L351-L419"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.get_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Retrieve the latest data from the buffer.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>winsize</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Size of the window of data to view. If the stream sampling rate <code class="docutils literal notranslate"><span class="pre">sfreq</span></code> is
+regular, <code class="docutils literal notranslate"><span class="pre">winsize</span></code> is expressed in seconds. The window will view the last
+<code class="docutils literal notranslate"><span class="pre">winsize</span> <span class="pre">*</span> <span class="pre">sfreq</span></code> samples (ceiled) from the buffer. If the stream sampling
+sampling rate <code class="docutils literal notranslate"><span class="pre">sfreq</span></code> is irregular, <code class="docutils literal notranslate"><span class="pre">winsize</span></code> is expressed in samples.
+The window will view the last <code class="docutils literal notranslate"><span class="pre">winsize</span></code> samples. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the entire
+buffer is returned.</p>
+</dd>
+<dt><strong>picks</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.26)"><span>array_like</span></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slice</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Channels to include. Slices and lists of integers will be interpreted as 
+channel indices. In lists, channel <em>type</em> strings (e.g., <code class="docutils literal notranslate"><span class="pre">['meg',</span> 
+<span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
+<code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
+string values “all” to pick all channels, or “data” to pick <a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.6)"><span class="xref std std-term">data 
+channels</span></a>. None (default) will pick all channels. Note that channels in 
+<code class="docutils literal notranslate"><span class="pre">info['bads']</span></code> <em>will be included</em> if their names or indices are 
+explicitly provided.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape (n_channels, n_samples)</span></dt><dd><p>Data in the given window.</p>
+</dd>
+<dt><strong>timestamps</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape (n_samples,)</span></dt><dd><p>Timestamps in the given window.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The number of newly available samples stored in the property <code class="docutils literal notranslate"><span class="pre">n_new_samples</span></code>
+is reset at every function call, even if all channels were not selected with
+the argument <code class="docutils literal notranslate"><span class="pre">picks</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.get_montage">
+<span class="sig-name descname"><span class="pre">get_montage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L421-L424"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.get_montage" title="Permalink to this definition">#</a></dt>
+<dd><p>Get a DigMontage from instance.</p>
+<dl class="field-list">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>montage</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="(in MNE v1.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DigMontage</span></code></a></span></dt><dd><p>A montage containing channel positions. If a string or
+<a class="reference external" href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DigMontage</span></code></a> is
+specified, the existing channel information will be updated with the
+channel positions from the montage. Valid strings are the names of the
+built-in montages that ship with MNE-Python; you can list those via
+<a class="reference external" href="https://mne.tools/stable/generated/mne.channels.get_builtin_montages.html#mne.channels.get_builtin_montages" title="(in MNE v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.channels.get_builtin_montages()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default), the channel positions will be removed from the
+<a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Info</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.pick">
+<span class="sig-name descname"><span class="pre">pick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">picks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L431-L455"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.pick" title="Permalink to this definition">#</a></dt>
+<dd><p>Pick a subset of channels.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>picks</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.26)"><span>array_like</span></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slice</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Channels to include. Slices and lists of integers will be interpreted as 
+channel indices. In lists, channel <em>type</em> strings (e.g., <code class="docutils literal notranslate"><span class="pre">['meg',</span> 
+<span class="pre">'eeg']</span></code>) will pick channels of those types, channel <em>name</em> strings (e.g., 
+<code class="docutils literal notranslate"><span class="pre">['MEG0111',</span> <span class="pre">'MEG2623']</span></code> will pick the given channels. Can also be the 
+string values “all” to pick all channels, or “data” to pick <a class="reference external" href="https://mne.tools/stable/documentation/glossary.html#term-data-channels" title="(in MNE v1.6)"><span class="xref std std-term">data 
+channels</span></a>. None (default) will pick all channels. Note that channels in 
+<code class="docutils literal notranslate"><span class="pre">info['bads']</span></code> <em>will be included</em> if their names or indices are 
+explicitly provided.</p>
+</dd>
+<dt><strong>exclude</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Set of channels to exclude, only used when picking is based on types, e.g.
+<code class="docutils literal notranslate"><span class="pre">exclude='bads'</span></code> when <code class="docutils literal notranslate"><span class="pre">picks=&quot;meg&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#mne_lsl.stream.StreamLSL.drop_channels" title="mne_lsl.stream.StreamLSL.drop_channels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_channels</span></code></a></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>Contrary to MNE-Python, re-ordering channels is not supported in <code class="docutils literal notranslate"><span class="pre">MNE-LSL</span></code>.
+Thus, if explicit channel names are provided in <code class="docutils literal notranslate"><span class="pre">picks</span></code>, they are sorted to
+match the order of existing channel names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L426-L429"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Open a real-time stream viewer. Not implemented.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.plot_sensors">
+<span class="sig-name descname"><span class="pre">plot_sensors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'topomap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sphere</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.plot_sensors" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot sensor positions.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>kind</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Whether to plot the sensors as 3d, topomap or as an interactive
+sensor selection dialog. Available options ‘topomap’, ‘3d’,
+‘select’. If ‘select’, a set of channels can be selected
+interactively by using lasso selector or clicking while holding
+control key. The selected channels are returned along with the
+figure instance. Defaults to ‘topomap’.</p>
+</dd>
+<dt><strong>ch_type</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The channel type to plot. Available options <code class="docutils literal notranslate"><span class="pre">'mag'</span></code>, <code class="docutils literal notranslate"><span class="pre">'grad'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'eeg'</span></code>, <code class="docutils literal notranslate"><span class="pre">'seeg'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dbs'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ecog'</span></code>, <code class="docutils literal notranslate"><span class="pre">'all'</span></code>. If <code class="docutils literal notranslate"><span class="pre">'all'</span></code>, all
+the available mag, grad, eeg, seeg, dbs, and ecog channels are plotted. If
+None (default), then channels are chosen in the order given above.</p>
+</dd>
+<dt><strong>title</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Title for the figure. If None (default), equals to <code class="docutils literal notranslate"><span class="pre">'Sensor</span>
+<span class="pre">positions</span> <span class="pre">(%s)'</span> <span class="pre">%</span> <span class="pre">ch_type</span></code>.</p>
+</dd>
+<dt><strong>show_names</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Whether to display all channel names. If an array, only the channel
+names in the array are shown. Defaults to False.</p>
+</dd>
+<dt><strong>ch_groups</strong><span class="classifier">‘position’ | <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array</span></code></a> of shape (n_ch_groups, n_picks) | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Channel groups for coloring the sensors. If None (default), default
+coloring scheme is used. If ‘position’, the sensors are divided
+into 8 regions. See <code class="docutils literal notranslate"><span class="pre">order</span></code> kwarg of <a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_raw.html#mne.viz.plot_raw" title="(in MNE v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.viz.plot_raw()</span></code></a>. If
+array, the channels are divided by picks given in the array.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.13.0.</span></p>
+</div>
+</dd>
+<dt><strong>to_sphere</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>Whether to project the 3d locations to a sphere. When False, the
+sensor array appears similar as to looking downwards straight above
+the subject’s head. Has no effect when kind=’3d’. Defaults to True.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.14.0.</span></p>
+</div>
+</dd>
+<dt><strong>axes</strong><span class="classifier">instance of <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.8.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Axes</span></code></a> | instance of <a class="reference external" href="https://matplotlib.org/stable/api/toolkits/mplot3d/axes3d.html#mpl_toolkits.mplot3d.axes3d.Axes3D" title="(in Matplotlib v3.8.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Axes3D</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Axes to draw the sensors to. If <code class="docutils literal notranslate"><span class="pre">kind='3d'</span></code>, axes must be an
+instance of Axes3D. If None (default), a new axes will be created.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.13.0.</span></p>
+</div>
+</dd>
+<dt><strong>block</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>Whether to halt program execution until the figure is closed.
+Defaults to False.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.13.0.</span></p>
+</div>
+</dd>
+<dt><strong>show</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>Show figure if True. Defaults to True.</p>
+</dd>
+<dt><strong>sphere</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://numpy.org/doc/stable/glossary.html#term-array_like" title="(in NumPy v1.26)"><span>array_like</span></a> | instance of <a class="reference external" href="https://mne.tools/stable/generated/mne.bem.ConductorModel.html#mne.bem.ConductorModel" title="(in MNE v1.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConductorModel</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a>  | ‘auto’ | ‘eeglab’</span></dt><dd><p>The sphere parameters to use for the head outline. Can be array-like of
+shape (4,) to give the X/Y/Z origin and radius in meters, or a single float
+to give just the radius (origin assumed 0, 0, 0). Can also be an instance
+of a spherical <a class="reference external" href="https://mne.tools/stable/generated/mne.bem.ConductorModel.html#mne.bem.ConductorModel" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConductorModel</span></code></a> to use the origin and
+radius from that object. If <code class="docutils literal notranslate"><span class="pre">'auto'</span></code> the sphere is fit to digitization
+points. If <code class="docutils literal notranslate"><span class="pre">'eeglab'</span></code> the head circle is defined by EEG electrodes
+<code class="docutils literal notranslate"><span class="pre">'Fpz'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Oz'</span></code>, <code class="docutils literal notranslate"><span class="pre">'T7'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'T8'</span></code> (if <code class="docutils literal notranslate"><span class="pre">'Fpz'</span></code> is not present,
+it will be approximated from the coordinates of <code class="docutils literal notranslate"><span class="pre">'Oz'</span></code>). <code class="docutils literal notranslate"><span class="pre">None</span></code> (the
+default) is equivalent to <code class="docutils literal notranslate"><span class="pre">'auto'</span></code> when enough extra digitization points
+are available, and (0, 0, 0, 0.095) otherwise.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.20.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.1: </span>Added <code class="docutils literal notranslate"><span class="pre">'eeglab'</span></code> option.</p>
+</div>
+</dd>
+<dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Control verbosity of the logging output. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, use the default
+verbosity level. See the <a class="reference external" href="https://docs.python.org/3/tutorial/stdlib2.html#tut-logging" title="(in Python v3.12)"><span class="xref std std-ref">logging documentation</span></a> and
+<a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a> for details. Should only be passed as a keyword
+argument.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl>
+<dt><strong>fig</strong><span class="classifier">instance of <a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure" title="(in Matplotlib v3.8.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Figure</span></code></a></span></dt><dd><p>Figure containing the sensor topography.</p>
+</dd>
+<dt><strong>selection</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a></span></dt><dd><p>A list of selected channels. Only returned if <code class="docutils literal notranslate"><span class="pre">kind=='select'</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_layout.html#mne.viz.plot_layout" title="(in MNE v1.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.viz.plot_layout</span></code></a></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This function plots the sensor locations from the info structure using
+matplotlib. For drawing the sensors using PyVista see
+<a class="reference external" href="https://mne.tools/stable/generated/mne.viz.plot_alignment.html#mne.viz.plot_alignment" title="(in MNE v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.viz.plot_alignment()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 0.12.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.record">
+<span class="sig-name descname"><span class="pre">record</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L457-L460"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.record" title="Permalink to this definition">#</a></dt>
+<dd><p>Record the stream data to disk. Not implemented.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.rename_channels">
+<span class="sig-name descname"><span class="pre">rename_channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_duplicates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L462-L489"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.rename_channels" title="Permalink to this definition">#</a></dt>
+<dd><p>Rename channels.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>mapping</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">callable()</span></code></a></span></dt><dd><p>A dictionary mapping the old channel to a new channel name e.g.
+<code class="docutils literal notranslate"><span class="pre">{'EEG061'</span> <span class="pre">:</span> <span class="pre">'EEG161'}</span></code>. Can also be a callable function that takes and
+returns a string.</p>
+</dd>
+<dt><strong>allow_duplicates</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>If True (default False), allow duplicates, which will automatically be
+renamed with <code class="docutils literal notranslate"><span class="pre">-N</span></code> at the end.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Sets the verbosity level. The verbosity increases gradually between
+<code class="docutils literal notranslate"><span class="pre">&quot;CRITICAL&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;DEBUG&quot;</span></code>.
+If None is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>.
+If a bool is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code> for False and
+to <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> for True.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.set_bipolar_reference">
+<span class="sig-name descname"><span class="pre">set_bipolar_reference</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L491-L494"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.set_bipolar_reference" title="Permalink to this definition">#</a></dt>
+<dd><p>Set a bipolar reference. Not implemented.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.set_channel_types">
+<span class="sig-name descname"><span class="pre">set_channel_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_unit_change</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'warn'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L496-L526"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.set_channel_types" title="Permalink to this definition">#</a></dt>
+<dd><p>Define the sensor type of channels.</p>
+<p>If the new channel type changes the unit type, e.g. from <code class="docutils literal notranslate"><span class="pre">T/m</span></code> to <code class="docutils literal notranslate"><span class="pre">V</span></code>, the
+unit multiplication factor is reset to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Use
+<code class="docutils literal notranslate"><span class="pre">Stream.set_channel_units</span></code> to change the multiplication factor, e.g. from
+<code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">-6</span></code> to change from Volts to microvolts.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>mapping</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>A dictionary mapping a channel to a sensor type (str), e.g.,
+<code class="docutils literal notranslate"><span class="pre">{'EEG061':</span> <span class="pre">'eog'}</span></code> or <code class="docutils literal notranslate"><span class="pre">{'EEG061':</span> <span class="pre">'eog',</span> <span class="pre">'TRIGGER':</span> <span class="pre">'stim'}</span></code>.</p>
+</dd>
+<dt><strong>on_unit_change</strong><span class="classifier"><code class="docutils literal notranslate"><span class="pre">'raise'</span></code> | <code class="docutils literal notranslate"><span class="pre">'warn'</span></code> | <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code></span></dt><dd><p>What to do if the measurement unit of a channel is changed automatically to
+match the new sensor type.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version MNE: </span>1.4</p>
+</div>
+</dd>
+<dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Sets the verbosity level. The verbosity increases gradually between
+<code class="docutils literal notranslate"><span class="pre">&quot;CRITICAL&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;DEBUG&quot;</span></code>.
+If None is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>.
+If a bool is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code> for False and
+to <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> for True.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.set_channel_units">
+<span class="sig-name descname"><span class="pre">set_channel_units</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L528-L548"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.set_channel_units" title="Permalink to this definition">#</a></dt>
+<dd><p>Define the channel unit multiplication factor.</p>
+<p>The unit itself is defined by the sensor type. Use
+<code class="docutils literal notranslate"><span class="pre">Stream.set_channel_types</span></code> to change the channel type, e.g. from planar
+gradiometers in <code class="docutils literal notranslate"><span class="pre">T/m</span></code> to EEG in <code class="docutils literal notranslate"><span class="pre">V</span></code>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>mapping</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>A dictionary mapping a channel to a unit, e.g. <code class="docutils literal notranslate"><span class="pre">{'EEG061':</span> <span class="pre">'microvolts'}</span></code>.
+The unit can be given as a human-readable string or as a unit multiplication
+factor, e.g. <code class="docutils literal notranslate"><span class="pre">-6</span></code> for microvolts corresponding to <code class="docutils literal notranslate"><span class="pre">1e-6</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>If the human-readable unit of your channel is not yet supported by MNE-LSL,
+please contact the developers on GitHub to add your units to the known set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.set_eeg_reference">
+<span class="sig-name descname"><span class="pre">set_eeg_reference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ch_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'eeg'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L550-L614"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.set_eeg_reference" title="Permalink to this definition">#</a></dt>
+<dd><p>Specify which reference to use for EEG-like data.</p>
+<p>Use this function to explicitly specify the desired reference for EEG-like
+channels. This can be either an existing electrode or a new virtual channel
+added with <code class="docutils literal notranslate"><span class="pre">Stream.add_reference_channels</span></code>. This function will re-reference
+the data in the ringbuffer according to the desired reference.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>ref_channels</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>Name(s) of the channel(s) used to construct the reference. Can also be set
+to <code class="docutils literal notranslate"><span class="pre">'average'</span></code> to apply a common average reference.</p>
+</dd>
+<dt><strong>ch_type</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a></span></dt><dd><p>The name of the channel type to apply the reference to. Valid channel types
+are <code class="docutils literal notranslate"><span class="pre">'eeg'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ecog'</span></code>, <code class="docutils literal notranslate"><span class="pre">'seeg'</span></code>, <code class="docutils literal notranslate"><span class="pre">'dbs'</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.set_meas_date">
+<span class="sig-name descname"><span class="pre">set_meas_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meas_date</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L616-L636"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.set_meas_date" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the measurement start date.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>meas_date</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#module-datetime" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">tuple</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>The new measurement date.
+If datetime object, it must be timezone-aware and in UTC.
+A tuple of (seconds, microseconds) or float (alias for
+<code class="docutils literal notranslate"><span class="pre">(meas_date,</span> <span class="pre">0)</span></code>) can also be passed and a datetime
+object will be automatically created. If None, will remove
+the time reference.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#mne_lsl.stream.StreamLSL.anonymize" title="mne_lsl.stream.StreamLSL.anonymize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anonymize</span></code></a></dt><dd></dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.set_montage">
+<span class="sig-name descname"><span class="pre">set_montage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">montage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_case</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">match_alias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'raise'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/mne-tools/mne-lsl/blob/main/mne_lsl/stream/_base.py#L638-L679"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mne_lsl.stream.StreamLSL.set_montage" title="Permalink to this definition">#</a></dt>
+<dd><p>Set EEG/sEEG/ECoG/DBS/fNIRS channel positions and digitization points.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>montage</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="(in MNE v1.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DigMontage</span></code></a></span></dt><dd><p>A montage containing channel positions. If a string or
+<a class="reference external" href="https://mne.tools/stable/generated/mne.channels.DigMontage.html#mne.channels.DigMontage" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DigMontage</span></code></a> is
+specified, the existing channel information will be updated with the
+channel positions from the montage. Valid strings are the names of the
+built-in montages that ship with MNE-Python; you can list those via
+<a class="reference external" href="https://mne.tools/stable/generated/mne.channels.get_builtin_montages.html#mne.channels.get_builtin_montages" title="(in MNE v1.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.channels.get_builtin_montages()</span></code></a>.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> (default), the channel positions will be removed from the
+<a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Info</span></code></a>.</p>
+</dd>
+<dt><strong>match_case</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a></span></dt><dd><p>If True (default), channel name matching will be case sensitive.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version MNE: </span>0.20</p>
+</div>
+</dd>
+<dt><strong>match_alias</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">dict</span></code></a></span></dt><dd><p>Whether to use a lookup table to match unrecognized channel location names
+to their known aliases. If True, uses the mapping in
+<code class="docutils literal notranslate"><span class="pre">mne.io.constants.CHANNEL_LOC_ALIASES</span></code>. If a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> is passed, it
+will be used instead, and should map from non-standard channel names to
+names in the specified <code class="docutils literal notranslate"><span class="pre">montage</span></code>. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version MNE: </span>0.23</p>
+</div>
+</dd>
+<dt><strong>on_missing</strong><span class="classifier">‘raise’ | ‘warn’ | ‘ignore’</span></dt><dd><p>Can be <code class="docutils literal notranslate"><span class="pre">'raise'</span></code> (default) to raise an error, <code class="docutils literal notranslate"><span class="pre">'warn'</span></code> to emit a
+warning, or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code> to ignore when channels have missing coordinates.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version MNE: </span>0.20.1</p>
+</div>
+</dd>
+<dt><strong>verbose</strong><span class="classifier"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">int</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">bool</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">None</span></code></a></span></dt><dd><p>Sets the verbosity level. The verbosity increases gradually between
+<code class="docutils literal notranslate"><span class="pre">&quot;CRITICAL&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;DEBUG&quot;</span></code>.
+If None is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code>.
+If a bool is provided, the verbosity is set to <code class="docutils literal notranslate"><span class="pre">&quot;WARNING&quot;</span></code> for False and
+to <code class="docutils literal notranslate"><span class="pre">&quot;INFO&quot;</span></code> for True.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://mne.tools/stable/generated/mne.channels.make_standard_montage.html#mne.channels.make_standard_montage" title="(in MNE v1.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.channels.make_standard_montage</span></code></a></dt><dd></dd>
+<dt><a class="reference external" href="https://mne.tools/stable/generated/mne.channels.make_dig_montage.html#mne.channels.make_dig_montage" title="(in MNE v1.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.channels.make_dig_montage</span></code></a></dt><dd></dd>
+<dt><a class="reference external" href="https://mne.tools/stable/generated/mne.channels.read_custom_montage.html#mne.channels.read_custom_montage" title="(in MNE v1.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mne.channels.read_custom_montage</span></code></a></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only EEG/sEEG/ECoG/DBS/fNIRS channels can have their positions set using a
+montage. Other channel types (e.g., MEG channels) should have their
+positions defined properly using their data reading functions.</p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.ch_names">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ch_names</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.ch_names" title="Permalink to this definition">#</a></dt>
+<dd><p>Name of the channels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.compensation_grade">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compensation_grade</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.compensation_grade" title="Permalink to this definition">#</a></dt>
+<dd><p>The current gradient compensation grade.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.connected">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connected</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.connected" title="Permalink to this definition">#</a></dt>
+<dd><p>Connection status of the stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.dtype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.dtype" title="Permalink to this definition">#</a></dt>
+<dd><p>Channel format of the stream.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.info">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">info</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.info" title="Permalink to this definition">#</a></dt>
+<dd><p>Info of the LSL stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://mne.tools/stable/generated/mne.Info.html#mne.Info" title="(in MNE v1.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Info</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.n_buffer">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_buffer</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.n_buffer" title="Permalink to this definition">#</a></dt>
+<dd><p>Number of samples that can be stored in the buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.n_new_samples">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_new_samples</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.n_new_samples" title="Permalink to this definition">#</a></dt>
+<dd><p>Number of new samples available in the buffer.</p>
+<p>The number of new samples is reset at every <code class="docutils literal notranslate"><span class="pre">Stream.get_data</span></code> call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.name" title="Permalink to this definition">#</a></dt>
+<dd><p>Name of the LSL stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.sinfo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sinfo</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.sinfo" title="Permalink to this definition">#</a></dt>
+<dd><p>StreamInfo of the connected stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="mne_lsl.lsl.StreamInfo.html#mne_lsl.lsl.StreamInfo" title="mne_lsl.lsl.StreamInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamInfo</span></code></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.source_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">source_id</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.source_id" title="Permalink to this definition">#</a></dt>
+<dd><p>ID of the source of the LSL stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mne_lsl.stream.StreamLSL.stype">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stype</span></span><a class="headerlink" href="#mne_lsl.stream.StreamLSL.stype" title="Permalink to this definition">#</a></dt>
+<dd><p>Type of the LSL stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="examples-using-mne-lsl-stream-streamlsl">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">mne_lsl.stream.StreamLSL</span></code><a class="headerlink" href="#examples-using-mne-lsl-stream-streamlsl" title="Permalink to this heading">#</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="An LSL stream can be consider as a continuous recording, with an unknown length and with only a..."><img alt="" src="../../_images/sphx_glr_00_stream_thumb.png" />
+<p><a class="reference internal" href="../tutorials/00_stream.html#sphx-glr-generated-tutorials-00-stream-py"><span class="std std-ref">Introduction to the Stream API</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Introduction to the Stream API</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="During the development of a project, it&#x27;s very helpful to test on a mock LSL stream replicating..."><img alt="" src="../../_images/sphx_glr_10_player_thumb.png" />
+<p><a class="reference internal" href="../tutorials/10_player.html#sphx-glr-generated-tutorials-10-player-py"><span class="std std-ref">Introduction to the Player API</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Introduction to the Player API</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="A StreamLSL will automatically attempt to interpret the channel names, types and units during t..."><img alt="" src="../../_images/sphx_glr_20_stream_meas_info_thumb.png" />
+<p><a class="reference internal" href="../tutorials/20_stream_meas_info.html#sphx-glr-generated-tutorials-20-stream-meas-info-py"><span class="std std-ref">Stream information</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Stream information</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="An LSL stream is composed of samples received at a given time. Each device, each source, advert..."><img alt="" src="../../_images/sphx_glr_30_timestamps_thumb.png" />
+<p><a class="reference internal" href="../tutorials/30_timestamps.html#sphx-glr-generated-tutorials-30-timestamps-py"><span class="std std-ref">Stream timestamps</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Stream timestamps</div>
+</div></div></section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="mne_lsl.player.PlayerLSL.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">mne_lsl.player.PlayerLSL</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../../api/most-used%20classes.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Most-used classes</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, M. Scheltienne, A. Desvachez, K. Lee
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/mne-tools/mne-lsl" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">mne_lsl.stream.StreamLSL</a><ul>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL"><code class="docutils literal notranslate"><span class="pre">StreamLSL</span></code></a><ul>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.add_reference_channels"><code class="docutils literal notranslate"><span class="pre">StreamLSL.add_reference_channels()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.anonymize"><code class="docutils literal notranslate"><span class="pre">StreamLSL.anonymize()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.connect"><code class="docutils literal notranslate"><span class="pre">StreamLSL.connect()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.disconnect"><code class="docutils literal notranslate"><span class="pre">StreamLSL.disconnect()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.drop_channels"><code class="docutils literal notranslate"><span class="pre">StreamLSL.drop_channels()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.filter"><code class="docutils literal notranslate"><span class="pre">StreamLSL.filter()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_channel_types"><code class="docutils literal notranslate"><span class="pre">StreamLSL.get_channel_types()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_channel_units"><code class="docutils literal notranslate"><span class="pre">StreamLSL.get_channel_units()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_data"><code class="docutils literal notranslate"><span class="pre">StreamLSL.get_data()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.get_montage"><code class="docutils literal notranslate"><span class="pre">StreamLSL.get_montage()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.pick"><code class="docutils literal notranslate"><span class="pre">StreamLSL.pick()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.plot"><code class="docutils literal notranslate"><span class="pre">StreamLSL.plot()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.plot_sensors"><code class="docutils literal notranslate"><span class="pre">StreamLSL.plot_sensors()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.record"><code class="docutils literal notranslate"><span class="pre">StreamLSL.record()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.rename_channels"><code class="docutils literal notranslate"><span class="pre">StreamLSL.rename_channels()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_bipolar_reference"><code class="docutils literal notranslate"><span class="pre">StreamLSL.set_bipolar_reference()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_channel_types"><code class="docutils literal notranslate"><span class="pre">StreamLSL.set_channel_types()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_channel_units"><code class="docutils literal notranslate"><span class="pre">StreamLSL.set_channel_units()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_eeg_reference"><code class="docutils literal notranslate"><span class="pre">StreamLSL.set_eeg_reference()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_meas_date"><code class="docutils literal notranslate"><span class="pre">StreamLSL.set_meas_date()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.set_montage"><code class="docutils literal notranslate"><span class="pre">StreamLSL.set_montage()</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.ch_names"><code class="docutils literal notranslate"><span class="pre">StreamLSL.ch_names</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.compensation_grade"><code class="docutils literal notranslate"><span class="pre">StreamLSL.compensation_grade</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.connected"><code class="docutils literal notranslate"><span class="pre">StreamLSL.connected</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.dtype"><code class="docutils literal notranslate"><span class="pre">StreamLSL.dtype</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.info"><code class="docutils literal notranslate"><span class="pre">StreamLSL.info</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.n_buffer"><code class="docutils literal notranslate"><span class="pre">StreamLSL.n_buffer</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.n_new_samples"><code class="docutils literal notranslate"><span class="pre">StreamLSL.n_new_samples</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.name"><code class="docutils literal notranslate"><span class="pre">StreamLSL.name</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.sinfo"><code class="docutils literal notranslate"><span class="pre">StreamLSL.sinfo</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.source_id"><code class="docutils literal notranslate"><span class="pre">StreamLSL.source_id</span></code></a></li>
+<li><a class="reference internal" href="#mne_lsl.stream.StreamLSL.stype"><code class="docutils literal notranslate"><span class="pre">StreamLSL.stype</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples-using-mne-lsl-stream-streamlsl">Examples using <code class="docutils literal notranslate"><span class="pre">mne_lsl.stream.StreamLSL</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=892f40e5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    </body>
+</html>

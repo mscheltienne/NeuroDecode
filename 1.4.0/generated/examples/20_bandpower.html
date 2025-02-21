@@ -1,0 +1,755 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Changelog" href="../../changes/index.html" /><link rel="prev" title="Real-time peak detection" href="10_peak_detection.html" />
+
+    <link rel="shortcut icon" href="../../_static/logo-no-mne.svg"/><!-- Generated with Sphinx 7.3.7 and Furo 2024.05.06 -->
+        <title>Bandpower rolling window - MNE-LSL</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/style.css?v=eb651fe2" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">MNE-LSL</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo-mne-hex.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../resources/install.html">Install</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/index.html">API References</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/most-used%20classes.html">Most-used classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/lsl%20%28low-level%29.html">LSL (low-level)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/legacy.html">Legacy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/command_line.html">Command line</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Tutorials</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/00_introduction.html">Introduction to real-time LSL streams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/10_low_level_API.html">Low-level LSL API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/20_player_annotations.html">Player with annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/30_stream_manual.html">Automatic vs Manual acquisition</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="00_player_separate_process.html">Replaying a file in a separate process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_peak_detection.html">Real-time peak detection</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Bandpower rolling window</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../changes/index.html">Changelog</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Changelog</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.4.html">Version 1.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.3.html">Version 1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.2.html">Version 1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.1.html">Version 1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changes/1.0.html">Version 1.0</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/generated/examples/20_bandpower.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-generated-examples-20-bandpower-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="bandpower-rolling-window">
+<span id="sphx-glr-generated-examples-20-bandpower-py"></span><h1>Bandpower rolling window<a class="headerlink" href="#bandpower-rolling-window" title="Link to this heading">🔗</a></h1>
+<p>With a <a class="reference internal" href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamLSL</span></code></a>, we can compute the bandpower on a time
+rolling window. For this example, we will look at the alpha band power, between 8 and
+13 Hz.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <a href="https://matplotlib.org/stable/api/cm_api.html#matplotlib.cm.ColormapRegistry" title="matplotlib.cm.ColormapRegistry" class="sphx-glr-backref-module-matplotlib-cm sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">colormaps</span></a>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">mne.io</span> <span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_fif.html#mne.io.read_raw_fif" title="mne.io.read_raw_fif" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">read_raw_fif</span></a>
+<span class="kn">from</span> <span class="nn">mne.time_frequency</span> <span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.time_frequency.psd_array_multitaper.html#mne.time_frequency.psd_array_multitaper" title="mne.time_frequency.psd_array_multitaper" class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-function"><span class="n">psd_array_multitaper</span></a>
+<span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <a href="https://docs.python.org/3/library/types.html#types.GenericAlias" title="types.GenericAlias" class="sphx-glr-backref-module-types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">NDArray</span></a>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simpson.html#scipy.integrate.simpson" title="scipy.integrate.simpson" class="sphx-glr-backref-module-scipy-integrate sphx-glr-backref-type-py-function"><span class="n">simpson</span></a>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.periodogram.html#scipy.signal.periodogram" title="scipy.signal.periodogram" class="sphx-glr-backref-module-scipy-signal sphx-glr-backref-type-py-function"><span class="n">periodogram</span></a><span class="p">,</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html#scipy.signal.welch" title="scipy.signal.welch" class="sphx-glr-backref-module-scipy-signal sphx-glr-backref-type-py-function"><span class="n">welch</span></a>
+
+<span class="kn">from</span> <span class="nn">mne_lsl.datasets</span> <span class="kn">import</span> <span class="n">sample</span>
+<span class="kn">from</span> <span class="nn">mne_lsl.player</span> <span class="kn">import</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-class"><span class="n">PlayerLSL</span></a>
+<span class="kn">from</span> <span class="nn">mne_lsl.stream</span> <span class="kn">import</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class"><span class="n">StreamLSL</span></a>
+
+<span class="c1"># dataset used in the example</span>
+<a href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="mne.io.Raw" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span></a> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.read_raw_fif.html#mne.io.read_raw_fif" title="mne.io.read_raw_fif" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-function"><span class="n">read_raw_fif</span></a><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">data_path</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;sample-ant-raw.fif&quot;</span><span class="p">,</span> <span class="n">preload</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw.crop" title="mne.io.Raw.crop" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-method"><span class="n">raw</span><span class="o">.</span><span class="n">crop</span></a><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<a href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="mne.io.Raw" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span></a>
+</pre></div>
+</div>
+<div class="output_subarea output_html rendered_html output_result">
+<details open>
+    <summary><strong>General</strong></summary>
+    <table class="table table-hover table-striped table-sm table-responsive small">
+        <tr>
+            <th>Measurement date</th>
+
+            <td>Unknown</td>
+
+        </tr>
+        <tr>
+            <th>Experimenter</th>
+
+            <td>mne_anonymize</td>
+
+        </tr>
+        <tr>
+            <th>Participant</th>
+
+            <td>Unknown</td>
+
+        </tr>
+    </table>
+    </details>
+    <details open>
+        <summary><strong>Channels</strong></summary>
+        <table class="table table-hover table-striped table-sm table-responsive small">
+            <tr>
+                <th>Digitized points</th>
+
+                <td>Not available</td>
+
+            </tr>
+            <tr>
+                <th>Good channels</th>
+                <td>63 EEG, 2 EOG, 1 Galvanic skin response, 1 ECG, 1 Stimulus</td>
+            </tr>
+            <tr>
+                <th>Bad channels</th>
+                <td>None</td>
+            </tr>
+            <tr>
+                <th>EOG channels</th>
+                <td>vEOG, hEOG</td>
+            </tr>
+            <tr>
+                <th>ECG channels</th>
+                <td>ECG</td>
+            </tr>
+        </table>
+        </details>
+        <details open>
+            <summary><strong>Data</strong></summary>
+            <table class="table table-hover table-striped table-sm table-responsive small">
+
+                <tr>
+                    <th>Sampling frequency</th>
+                    <td>1024.00 Hz</td>
+                </tr>
+
+
+                <tr>
+                    <th>Highpass</th>
+                    <td>0.00 Hz</td>
+                </tr>
+
+
+                <tr>
+                    <th>Lowpass</th>
+                    <td>512.00 Hz</td>
+                </tr>
+
+
+
+                <tr>
+                    <th>Filenames</th>
+                    <td>sample-ant-raw.fif</td>
+                </tr>
+
+
+                <tr>
+                    <th>Duration</th>
+                    <td>00:00:20 (HH:MM:SS)</td>
+                </tr>
+
+            </table>
+            </details>
+</div>
+<br />
+<br /><section id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Link to this heading">🔗</a></h2>
+<p>In a real-time scenario, we would want to apply artifact rejection methods online to
+estimate the bandpower on brain signals, not on artifacts. For this example, we will
+only apply a bandpass filter to the data.</p>
+</section>
+<section id="estimating-the-bandpower">
+<h2>Estimating the bandpower<a class="headerlink" href="#estimating-the-bandpower" title="Link to this heading">🔗</a></h2>
+<p>First, we will define the function estimating the bandpower on a time window. The
+bandpower will be estimated by integrating the power spectral density (PSD) on the
+frequency band of interest, using the composite Simpson’s rule
+(<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simpson.html#scipy.integrate.simpson" title="(in SciPy v1.13.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.integrate.simpson()</span></code></a>).</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bandpower</span><span class="p">(</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">:</span> <a href="https://docs.python.org/3/library/types.html#types.GenericAlias" title="types.GenericAlias" class="sphx-glr-backref-module-types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">NDArray</span></a><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">np</span><span class="o">.</span><span class="n">float64</span></a><span class="p">],</span>
+    <span class="n">fs</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">band</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">relative</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <a href="https://docs.python.org/3/library/types.html#types.GenericAlias" title="types.GenericAlias" class="sphx-glr-backref-module-types sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">NDArray</span></a><span class="p">[</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">np</span><span class="o">.</span><span class="n">float64</span></a><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the bandpower of the individual channels.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array of shape (n_channels, n_samples)</span>
+<span class="sd">        Data on which the the bandpower is estimated.</span>
+<span class="sd">    fs : float</span>
+<span class="sd">        Sampling frequency in Hz.</span>
+<span class="sd">    method : &#39;periodogram&#39; | &#39;welch&#39; | &#39;multitaper&#39;</span>
+<span class="sd">        Method used to estimate the power spectral density.</span>
+<span class="sd">    band : tuple of shape (2,)</span>
+<span class="sd">        Frequency band of interest in Hz as 2 floats, e.g. ``(8, 13)``. The</span>
+<span class="sd">        edges are included.</span>
+<span class="sd">    relative : bool</span>
+<span class="sd">        If True, the relative bandpower is returned instead of the absolute</span>
+<span class="sd">        bandpower.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional keyword arguments are provided to the power spectral density</span>
+<span class="sd">        estimation function.</span>
+<span class="sd">        * &#39;periodogram&#39;: scipy.signal.periodogram</span>
+<span class="sd">        * &#39;welch&#39;``: scipy.signal.welch</span>
+<span class="sd">        * &#39;multitaper&#39;: mne.time_frequency.psd_array_multitaper</span>
+
+<span class="sd">        The only provided arguments are the data array and the sampling</span>
+<span class="sd">        frequency.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bandpower : array of shape (n_channels,)</span>
+<span class="sd">        The bandpower of each channel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># compute the power spectral density</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span><span class="o">.</span><span class="n">ndim</span></a> <span class="o">==</span> <span class="mi">2</span>
+    <span class="p">),</span> <span class="s2">&quot;The provided data must be a 2D array of shape (n_channels, n_samples).&quot;</span>
+    <span class="k">if</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="o">==</span> <span class="s2">&quot;periodogram&quot;</span><span class="p">:</span>
+        <span class="n">freqs</span><span class="p">,</span> <span class="n">psd</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.periodogram.html#scipy.signal.periodogram" title="scipy.signal.periodogram" class="sphx-glr-backref-module-scipy-signal sphx-glr-backref-type-py-function"><span class="n">periodogram</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="o">==</span> <span class="s2">&quot;welch&quot;</span><span class="p">:</span>
+        <span class="n">freqs</span><span class="p">,</span> <span class="n">psd</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html#scipy.signal.welch" title="scipy.signal.welch" class="sphx-glr-backref-module-scipy-signal sphx-glr-backref-type-py-function"><span class="n">welch</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="o">==</span> <span class="s2">&quot;multitaper&quot;</span><span class="p">:</span>
+        <span class="n">psd</span><span class="p">,</span> <span class="n">freqs</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.time_frequency.psd_array_multitaper.html#mne.time_frequency.psd_array_multitaper" title="mne.time_frequency.psd_array_multitaper" class="sphx-glr-backref-module-mne-time_frequency sphx-glr-backref-type-py-function"><span class="n">psd_array_multitaper</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The provided method &#39;</span><span class="si">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="si">}</span><span class="s2">&#39; is not supported.&quot;</span><span class="p">)</span>
+    <span class="c1"># compute the bandpower</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">band</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;The &#39;band&#39; argument must be a 2-length tuple.&quot;</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">band</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">band</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">),</span> <span class="s2">&quot;The &#39;band&#39; argument must be defined as (low, high) (in Hz).&quot;</span>
+    <span class="n">freq_res</span> <span class="o">=</span> <span class="n">freqs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">freqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">idx_band</span> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="numpy.ufunc" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span></a><span class="p">(</span><span class="n">freqs</span> <span class="o">&gt;=</span> <span class="n">band</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">freqs</span> <span class="o">&lt;=</span> <span class="n">band</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">bandpower</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simpson.html#scipy.integrate.simpson" title="scipy.integrate.simpson" class="sphx-glr-backref-module-scipy-integrate sphx-glr-backref-type-py-function"><span class="n">simpson</span></a><span class="p">(</span><span class="n">psd</span><span class="p">[:,</span> <span class="n">idx_band</span><span class="p">],</span> <span class="n">dx</span><span class="o">=</span><span class="n">freq_res</span><span class="p">)</span>
+    <span class="n">bandpower</span> <span class="o">=</span> <span class="n">bandpower</span> <span class="o">/</span> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.simpson.html#scipy.integrate.simpson" title="scipy.integrate.simpson" class="sphx-glr-backref-module-scipy-integrate sphx-glr-backref-type-py-function"><span class="n">simpson</span></a><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="n">freq_res</span><span class="p">)</span> <span class="k">if</span> <span class="n">relative</span> <span class="k">else</span> <span class="n">bandpower</span>
+    <span class="k">return</span> <span class="n">bandpower</span>
+</pre></div>
+</div>
+</section>
+<section id="real-time-estimation-on-a-rolling-window">
+<h2>Real-time estimation on a rolling window<a class="headerlink" href="#real-time-estimation-on-a-rolling-window" title="Link to this heading">🔗</a></h2>
+<p>Next, we can estimate the alpha band power on a rolling window of 4 seconds by running
+an infinite loop that reads the data from the stream and computes the bandpower on the
+last 4 seconds of data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A chunk size of 200 samples is used to ensure stability in our documentation
+build, but in practice, a real-time application will likely publish new samples
+in smaller chunks and thus at a higher frequency. Due to the large chunk size,
+the acquisition delay of the connected stream is also increased to reduce the
+load on the CPU.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-class"><span class="n">PlayerLSL</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="mne.io.Raw" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span></a><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bandpower-example&quot;</span><span class="p">):</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stream</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class"><span class="n">StreamLSL</span></a><span class="p">(</span><span class="n">bufsize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bandpower-example&quot;</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.connect" title="mne_lsl.stream.StreamLSL.connect" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">connect</span></a><span class="p">(</span><span class="n">acquisition_delay</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">processing_flags</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">pick</span></a><span class="p">(</span><span class="s2">&quot;eeg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span>  <span class="c1"># reset the number of new samples after the filter is applied</span>
+
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">while</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_new_samples</span></a> <span class="o">&lt;</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_buffer" title="mne_lsl.stream.StreamLSL.n_buffer" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_buffer</span></a><span class="p">:</span>
+        <a href="https://docs.python.org/3/library/time.html#time.sleep" title="time.sleep" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">sleep</span></a><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># wait for the buffer to be entirely filled</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span></a><span class="p">)</span> <span class="o">!=</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="k">if</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_new_samples</span></a> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>  <span class="c1"># wait for new samples</span>
+        <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span>
+        <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bp</span></a> <span class="o">=</span> <span class="n">bandpower</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.info" title="mne_lsl.stream.StreamLSL.info" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">info</span></a><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <span class="s2">&quot;periodogram&quot;</span><span class="p">,</span> <span class="n">band</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+        <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span><span class="o">.</span><span class="n">append</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bp</span></a><span class="p">)</span>
+        <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span><span class="o">.</span><span class="n">append</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.disconnect" title="mne_lsl.stream.StreamLSL.disconnect" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">disconnect</span></a><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-in-function-of-time">
+<h2>Plot in function of time<a class="headerlink" href="#plot-in-function-of-time" title="Link to this heading">🔗</a></h2>
+<p>We can now plot the rolling-window bandpower in function of time, using the timestamps
+of the last sample for each window on the X-axis. For simplicity, let’s average all
+channels together.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">f</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a> <span class="o">-</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.average.html#numpy.average" title="numpy.average" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">average</span></a><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span></a><span class="p">])</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html#matplotlib.axes.Axes.set_xlabel" title="matplotlib.axes.Axes.set_xlabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span></a><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="matplotlib.axes.Axes.set_ylabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s2">&quot;Relative α band power (%)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_20_bandpower_001.png" srcset="../../_images/sphx_glr_20_bandpower_001.png" alt="20 bandpower" class = "sphx-glr-single-img"/></section>
+<section id="delay-between-2-samples">
+<h2>Delay between 2 samples<a class="headerlink" href="#delay-between-2-samples" title="Link to this heading">🔗</a></h2>
+<p>Let’s also have a look at the delay between 2 data points, i.e. the overlap between
+the windows.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">f</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">timedeltas</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html#numpy.diff" title="numpy.diff" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">diff</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a> <span class="o">-</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">1000</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist" title="matplotlib.axes.Axes.hist" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">hist</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">timedeltas</span></a><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html#matplotlib.axes.Axes.set_xlabel" title="matplotlib.axes.Axes.set_xlabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span></a><span class="p">(</span><span class="s2">&quot;Delay between 2 samples (ms)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_20_bandpower_002.png" srcset="../../_images/sphx_glr_20_bandpower_002.png" alt="20 bandpower" class = "sphx-glr-single-img"/><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to the low resources available on our CIs to build the documentation, some of
+those datapoints might have been computed with 2 acquisition window of delay
+instead of 1, yielding a delay between 2 samples of 2 acquisition windows instead
+of 1. In practice, with a large chunk size of 200 samples, we should get a delay
+between 2 computed time points to 200 samples, i.e. around 195.31 ms.</p>
+</div>
+</section>
+<section id="compare-power-spectral-density-estimation-methods">
+<h2>Compare power spectral density estimation methods<a class="headerlink" href="#compare-power-spectral-density-estimation-methods" title="Link to this heading">🔗</a></h2>
+<p>Let’s compare both the bandpower estimation and the computation time of the different
+methods to estimate the power spectral density.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;periodogram&quot;</span><span class="p">,</span> <span class="s2">&quot;welch&quot;</span><span class="p">,</span> <span class="s2">&quot;multitaper&quot;</span><span class="p">)</span>
+<span class="k">with</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-class"><span class="n">PlayerLSL</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="mne.io.Raw" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span></a><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bandpower-example&quot;</span><span class="p">):</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stream</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class"><span class="n">StreamLSL</span></a><span class="p">(</span><span class="n">bufsize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bandpower-example&quot;</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.connect" title="mne_lsl.stream.StreamLSL.connect" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">connect</span></a><span class="p">(</span><span class="n">acquisition_delay</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">processing_flags</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">pick</span></a><span class="p">(</span><span class="s2">&quot;eeg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span>  <span class="c1"># reset the number of new samples after the filter is applied</span>
+
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a> <span class="o">=</span> <span class="p">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">},</span> <span class="p">[]</span>
+    <span class="k">while</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_new_samples</span></a> <span class="o">&lt;</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_buffer" title="mne_lsl.stream.StreamLSL.n_buffer" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_buffer</span></a><span class="p">:</span>
+        <a href="https://docs.python.org/3/library/time.html#time.sleep" title="time.sleep" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">sleep</span></a><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># wait for the buffer to be entirely filled</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">!=</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="k">if</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_new_samples</span></a> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>  <span class="c1"># wait for new samples</span>
+        <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span>
+        <span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">:</span>
+            <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bp</span></a> <span class="o">=</span> <span class="n">bandpower</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.info" title="mne_lsl.stream.StreamLSL.info" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">info</span></a><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">,</span> <span class="n">band</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+            <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bp</span></a><span class="p">)</span>
+        <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span><span class="o">.</span><span class="n">append</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.disconnect" title="mne_lsl.stream.StreamLSL.disconnect" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">disconnect</span></a><span class="p">()</span>
+
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">f</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">):</span>
+    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span>
+        <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a> <span class="o">-</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.average.html#numpy.average" title="numpy.average" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">average</span></a><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">for</span> <span class="n">dp</span> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datapoints</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">]],</span>
+        <span class="n">label</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/cm_api.html#matplotlib.cm.ColormapRegistry" title="matplotlib.cm.ColormapRegistry" class="sphx-glr-backref-module-matplotlib-cm sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">colormaps</span></a><span class="p">[</span><span class="s2">&quot;viridis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">colors</span><span class="p">[</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="mi">20</span><span class="p">],</span>
+    <span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html#matplotlib.axes.Axes.set_xlabel" title="matplotlib.axes.Axes.set_xlabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span></a><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="matplotlib.axes.Axes.set_ylabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s2">&quot;Relative α band power (%)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.legend.html#matplotlib.axes.Axes.legend" title="matplotlib.axes.Axes.legend" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">legend</span></a><span class="p">()</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_20_bandpower_003.png" srcset="../../_images/sphx_glr_20_bandpower_003.png" alt="20 bandpower" class = "sphx-glr-single-img"/><p>For the computation time and the overall loop execution speed, we need to run each
+method on a separate loop.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;periodogram&quot;</span><span class="p">,</span> <span class="s2">&quot;welch&quot;</span><span class="p">,</span> <span class="s2">&quot;multitaper&quot;</span><span class="p">)</span>
+<span class="k">with</span> <a href="../api/mne_lsl.player.PlayerLSL.html#mne_lsl.player.PlayerLSL" title="mne_lsl.player.PlayerLSL" class="sphx-glr-backref-module-mne_lsl-player sphx-glr-backref-type-py-class"><span class="n">PlayerLSL</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="mne.io.Raw" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">raw</span></a><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bandpower-example&quot;</span><span class="p">):</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">stream</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL" title="mne_lsl.stream.StreamLSL" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-class"><span class="n">StreamLSL</span></a><span class="p">(</span><span class="n">bufsize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bandpower-example&quot;</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.connect" title="mne_lsl.stream.StreamLSL.connect" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">connect</span></a><span class="p">(</span><span class="n">acquisition_delay</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">processing_flags</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.pick" title="mne_lsl.stream.StreamLSL.pick" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">pick</span></a><span class="p">(</span><span class="s2">&quot;eeg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span>  <span class="c1"># reset the number of new samples after the filter is applied</span>
+
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a> <span class="o">=</span> <span class="p">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">}</span>
+    <span class="k">while</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_new_samples</span></a> <span class="o">&lt;</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_buffer" title="mne_lsl.stream.StreamLSL.n_buffer" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_buffer</span></a><span class="p">:</span>
+        <a href="https://docs.python.org/3/library/time.html#time.sleep" title="time.sleep" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">sleep</span></a><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># wait for the buffer to be entirely filled</span>
+    <span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">):</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">]])</span> <span class="o">!=</span> <span class="mi">30</span><span class="p">:</span>
+            <span class="k">if</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.n_new_samples" title="mne_lsl.stream.StreamLSL.n_new_samples" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">n_new_samples</span></a> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>  <span class="c1"># wait for new samples</span>
+            <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a> <span class="o">=</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.get_data" title="mne_lsl.stream.StreamLSL.get_data" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">()</span>
+            <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bp</span></a> <span class="o">=</span> <span class="n">bandpower</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data</span></a><span class="p">,</span> <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.info" title="mne_lsl.stream.StreamLSL.info" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-property"><span class="n">stream</span><span class="o">.</span><span class="n">info</span></a><span class="p">[</span><span class="s2">&quot;sfreq&quot;</span><span class="p">],</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">,</span> <span class="n">band</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span>
+            <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ts</span></a><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <a href="../api/mne_lsl.stream.StreamLSL.html#mne_lsl.stream.StreamLSL.disconnect" title="mne_lsl.stream.StreamLSL.disconnect" class="sphx-glr-backref-module-mne_lsl-stream sphx-glr-backref-type-py-method"><span class="n">stream</span><span class="o">.</span><span class="n">disconnect</span></a><span class="p">()</span>
+
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">timedeltas</span></a> <span class="o">=</span> <span class="p">{</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">:</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html#numpy.diff" title="numpy.diff" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">diff</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">]</span> <span class="o">-</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">times</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="mi">1000</span> <span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a>
+<span class="p">}</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">timedeltas_average</span></a> <span class="o">=</span> <span class="p">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">:</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.average.html#numpy.average" title="numpy.average" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">average</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">timedeltas</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">])</span> <span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">}</span>
+
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Average delay between 2 samples for </span><span class="si">{</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="si">}</span><span class="s2">: &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">timedeltas_average</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ms&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Average delay between 2 samples for periodogram: 195.31 ms
+Average delay between 2 samples for welch: 195.31 ms
+Average delay between 2 samples for multitaper: 195.31 ms
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For this example, the average delay between 2 estimation of the bandpower is
+similar between all 3 methods because we are waiting for new samples which come in
+chunks of 200 samples, i.e. every 195.31 ms at the sampling frequency of 1024 Hz.
+The figure obtained for a chunk size of 1 sample and an acquisition delay of 1 ms
+is shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">f</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">):</span>
+    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist" title="matplotlib.axes.Axes.hist" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">hist</span></a><span class="p">(</span>
+        <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">timedeltas</span></a><span class="p">[</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">],</span>
+        <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/cm_api.html#matplotlib.cm.ColormapRegistry" title="matplotlib.cm.ColormapRegistry" class="sphx-glr-backref-module-matplotlib-cm sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">colormaps</span></a><span class="p">[</span><span class="s2">&quot;viridis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">colors</span><span class="p">[</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">k</span></a> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="mi">20</span><span class="p">],</span>
+    <span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html#matplotlib.axes.Axes.set_xlabel" title="matplotlib.axes.Axes.set_xlabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span></a><span class="p">(</span><span class="s2">&quot;Delay between 2 samples (ms)&quot;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.legend.html#matplotlib.axes.Axes.legend" title="matplotlib.axes.Axes.legend" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">legend</span></a><span class="p">()</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<img alt="../../_images/bp-performance.png" class="align-center" src="../../_images/bp-performance.png" />
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 48.788 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  86 MB</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-generated-examples-20-bandpower-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/763809ca44892f86da239975a54aa45c/20_bandpower.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">20_bandpower.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/15e9412ae22a63c550c15e151b3ffffc/20_bandpower.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">20_bandpower.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../../changes/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Changelog</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="10_peak_detection.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Real-time peak detection</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, M. Scheltienne, A. Desvachez, K. Lee
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/mne-tools/mne-lsl" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Bandpower rolling window</a><ul>
+<li><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
+<li><a class="reference internal" href="#estimating-the-bandpower">Estimating the bandpower</a></li>
+<li><a class="reference internal" href="#real-time-estimation-on-a-rolling-window">Real-time estimation on a rolling window</a></li>
+<li><a class="reference internal" href="#plot-in-function-of-time">Plot in function of time</a></li>
+<li><a class="reference internal" href="#delay-between-2-samples">Delay between 2 samples</a></li>
+<li><a class="reference internal" href="#compare-power-spectral-density-estimation-methods">Compare power spectral density estimation methods</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=9172181d"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=4e2eecee"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

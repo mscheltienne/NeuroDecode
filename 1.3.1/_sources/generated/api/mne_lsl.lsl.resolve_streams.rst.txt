@@ -1,0 +1,9 @@
+﻿mne\_lsl.lsl.resolve\_streams
+=============================
+
+.. currentmodule:: mne_lsl.lsl
+
+.. autofunction:: resolve_streams
+
+.. minigallery:: mne_lsl.lsl.resolve_streams
+    :add-heading:

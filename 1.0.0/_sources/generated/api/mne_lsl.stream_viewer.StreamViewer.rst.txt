@@ -1,0 +1,11 @@
+﻿mne\_lsl.stream\_viewer.StreamViewer
+====================================
+
+.. currentmodule:: mne_lsl.stream_viewer
+
+.. autoclass:: StreamViewer
+   :members:
+   :inherited-members:
+
+.. minigallery:: mne_lsl.stream_viewer.StreamViewer
+    :add-heading:

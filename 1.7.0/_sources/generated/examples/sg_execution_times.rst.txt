@@ -1,0 +1,49 @@
+
+:orphan:
+
+.. _sphx_glr_generated_examples_sg_execution_times:
+
+
+Computation times
+=================
+**03:52.908** total execution time for 5 files **from generated/examples**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_generated_examples_40_decode.py` (``40_decode.py``)
+     - 01:18.475
+     - 609.5
+   * - :ref:`sphx_glr_generated_examples_30_real_time_evoked_responses.py` (``30_real_time_evoked_responses.py``)
+     - 00:57.369
+     - 589.9
+   * - :ref:`sphx_glr_generated_examples_20_bandpower.py` (``20_bandpower.py``)
+     - 00:49.237
+     - 212.2
+   * - :ref:`sphx_glr_generated_examples_10_peak_detection.py` (``10_peak_detection.py``)
+     - 00:38.110
+     - 190.5
+   * - :ref:`sphx_glr_generated_examples_00_player_separate_process.py` (``00_player_separate_process.py``)
+     - 00:09.718
+     - 185.9

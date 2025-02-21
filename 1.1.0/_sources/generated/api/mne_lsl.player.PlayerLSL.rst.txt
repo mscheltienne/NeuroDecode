@@ -1,0 +1,11 @@
+﻿mne\_lsl.player.PlayerLSL
+=========================
+
+.. currentmodule:: mne_lsl.player
+
+.. autoclass:: PlayerLSL
+   :members:
+   :inherited-members:
+
+.. minigallery:: mne_lsl.player.PlayerLSL
+    :add-heading:

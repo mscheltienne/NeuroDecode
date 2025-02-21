@@ -1,0 +1,9 @@
+﻿mne\_lsl.lsl.library\_version
+=============================
+
+.. currentmodule:: mne_lsl.lsl
+
+.. autofunction:: library_version
+
+.. minigallery:: mne_lsl.lsl.library_version
+    :add-heading:

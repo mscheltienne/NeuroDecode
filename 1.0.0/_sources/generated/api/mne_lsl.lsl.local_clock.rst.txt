@@ -1,0 +1,9 @@
+﻿mne\_lsl.lsl.local\_clock
+=========================
+
+.. currentmodule:: mne_lsl.lsl
+
+.. autofunction:: local_clock
+
+.. minigallery:: mne_lsl.lsl.local_clock
+    :add-heading:
